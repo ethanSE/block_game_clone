@@ -1,0 +1,27 @@
+# MVP
+
+- view the game board
+  - as a player, I would like to see the game board so that I can visualize the game state and strategize.
+- view the current score
+  - as a player, I would like to view the current score, so that I can track the status of the game.
+- receive indication of active player
+  - as a player I would like to receive indication when it is my turn so that I do not have to keep track of this.
+- only active player is able to place a piece on the board
+  - as a player I would like to be assured that turns will not accidentaly be taken out of sequence so that I can focus on strategy.
+- view player's available pieces
+  - as a player I would like to view my remaining pieces so that I can plan future moves.
+- select and rotate a piece from your available pieces
+  - as a player I would like to be able to select a piece from my "hand" and rotate it and view the rotation so that I can keep track of its orientation.
+- receive indication about whether potential moves are legal or not
+  - as a player I would like to be aware of whether a potential move is legal or not so that I am not mistaken and then disappointed after learning that the move is not legal.
+  - as a player I would like to be made aware of why a potential move was not legal so that I can make legal moves in the future.
+- place a piece on the board
+  - as a player I would like interact with the visual representation of the game board so that I can maintain my focus from determining a move to making the move.
+- be able to "pass" when you cannot play
+  - as a player, I would like to be able to pass my turn when I am not able to play so that the game can continue.
+- receive indication when a player has won (including score)
+  - as a player, I would like to be made aware of the result of the game and the final score.
+- reset
+  - as a player, I would like to be able to reset so that I can play mulitple games.
+- view rules
+  - as a player, I would like to be able to view the rules of the game so that I understand how to play.
