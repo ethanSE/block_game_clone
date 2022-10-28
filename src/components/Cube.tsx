@@ -12,6 +12,7 @@ export default function Cube(props: { position: coord }) {
                 event.stopPropagation();
                 setHovered(true);
             }}
+            onClick={(e) => e.stopPropagation()}
             onPointerOut={(_) => setHovered(false)}
         >
             <boxGeometry args={[1, 1, 1]} />

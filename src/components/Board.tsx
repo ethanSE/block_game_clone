@@ -3,7 +3,8 @@ import { ContactShadows } from '@react-three/drei';
 //Components
 import { BoardSquare } from './BoardSquare';
 
-//temporary - extract to game state higher in component structure, will be multiple boards later
+//temporary - extract to game state higher in component structure
+//will be multiple boards later, differennt shapes, max heights, etc.
 const defaultBoard = new Array(20).fill(0);
 
 export default function Board() {

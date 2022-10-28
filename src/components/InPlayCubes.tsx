@@ -7,13 +7,11 @@ import { GS } from "../hooks/useGameState";
 //Components
 import Cube from "./Cube";
 
-export default function InPlayCubes(props: JSX.IntrinsicElements["mesh"]) {
+export default function InPlayCubes() {
     const [inPlay, _]: GS = useContext(GameStateContext)
     return (
-        <mesh
-            {...props}
-        >
-            {inPlay.map((c, index: number) => <Cube position={c} key={index.toString()} />)}
+        <mesh>
+            {inPlay.map((c) => <Cube position={c} />)}
         </mesh>
     );
 }

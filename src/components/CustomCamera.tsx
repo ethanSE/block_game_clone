@@ -13,7 +13,6 @@ export default function CustomCamera() {
         <>
             <OrthographicCamera makeDefault position={[-3, 6, 10]} zoom={60} />
             <OrbitControls
-                //https://threejs.org/docs/#examples/en/controls/OrbitControls.object
                 target={defaultBoardCenter}
                 panSpeed={1}
                 maxAzimuthAngle={Number.POSITIVE_INFINITY} //can spin board

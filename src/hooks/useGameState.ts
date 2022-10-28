@@ -1,5 +1,3 @@
-//this was built for storing asks in AppStateContainer
-//accomplishes the goal of hooks of removing abstracting away business logic from component
 import { useReducer } from 'react';
 
 export type gameStateAction = {
