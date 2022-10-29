@@ -1,0 +1,40 @@
+.activePlayer {
+    width: 100vw;
+    height: auto;
+    position: absolute;
+    top: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.activePlayerRow {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+}
+
+.PassButton {
+    border-radius: 10px;
+    border-color: coral;
+    background-color: orange;
+    width: 100px;
+    height: 50px;
+}
+
+.p1 {
+    background-color:#000080
+}
+
+.p2 {
+    background-color: #008000;
+}
+
+.playerColorIndicator {
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
