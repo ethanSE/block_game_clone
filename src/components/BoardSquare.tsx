@@ -4,7 +4,7 @@ import GameStateContext from '../context/GameStateContext';
 
 export function BoardSquare(props: { position: [number, number] }) {
     const [hovered, setHovered] = useState(false);
-    const [_, dispatch] = useContext(GameStateContext);
+    const [GS, dispatch] = useContext(GameStateContext);
     return (
         <mesh
             position={[props.position[0], -.6, props.position[1]]}
@@ -15,11 +15,13 @@ export function BoardSquare(props: { position: [number, number] }) {
             onPointerOut={(_) => setHovered(false)}
             onClick={(event) => {
                 event.stopPropagation();
-                console.log(props.position);
                 if (props.position) {
                     dispatch({
                         type: "add",
-                        newPiece: [props.position[0], 0, props.position[1]]
+                        newPiece: {
+                            position: [props.position[0], 0, props.position[1]],
+                            owner: GS.currentPlayer
+                        }
                     })
                 }
             }
