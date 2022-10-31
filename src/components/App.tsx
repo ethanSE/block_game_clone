@@ -8,6 +8,7 @@ import { useGameState } from '../hooks/useGameState';
 import Board from './Board'
 import CustomCamera from './CustomCamera'
 import InPlayCubes from './InPlayCubes'
+import ActivePlayer from './ActivePlayer';
 
 //styles
 import './App.css';
@@ -15,11 +16,11 @@ import './App.css';
 
 function App() {
     //hold game state here
-    const example = useGameState()
+    const gameState = useGameState()
 
     return (
         <div className='website'>
-            <GameStateContext.Provider value={example}>
+            <GameStateContext.Provider value={gameState}>
                 <Canvas>
                     <CustomCamera />
                     <ambientLight intensity={0.5} />
@@ -28,6 +29,7 @@ function App() {
                     <InPlayCubes />
                     <Board />
                 </Canvas>
+                <ActivePlayer />
             </GameStateContext.Provider>
         </div>
     );

@@ -1,1 +1,14 @@
-.website { background-color: blanchedalmond; height: 100vh;}
+.website { 
+    background-color: blanchedalmond; 
+    height: 100vh;
+    overflow-y: auto;
+  
+    /* hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
