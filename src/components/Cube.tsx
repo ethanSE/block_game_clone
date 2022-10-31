@@ -1,22 +1,18 @@
 import { useState } from "react";
+import { coord } from "../hooks/useGameState";
 
-export default function Box(props: JSX.IntrinsicElements["mesh"]) {
+export default function Cube(props: { position: coord }) {
     // Hold state for hovered and clicked events
     const [hovered, setHovered] = useState(false);
-    const [clicked, setClicked] = useState(false);
 
     return (
         <mesh
-            {...props}
-            scale={clicked ? 1.5 : 1}
-            onClick={(event) => {
-                event.stopPropagation();
-                setClicked(!clicked);
-            }}
+            position={props.position}
             onPointerOver={(event) => {
                 event.stopPropagation();
                 setHovered(true);
             }}
+            onClick={(e) => e.stopPropagation()}
             onPointerOut={(_) => setHovered(false)}
         >
             <boxGeometry args={[1, 1, 1]} />
