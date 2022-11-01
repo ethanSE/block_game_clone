@@ -2,16 +2,16 @@ import { useContext } from "react";
 
 //State/Context
 import GameStateContext from "../context/GameStateContext";
-import { GS } from "../hooks/useGameState";
+import { GSReducerType } from "../hooks/useGameState";
 
 //Components
 import Cube from "./Cube";
 
 export default function InPlayCubes() {
-    const [inPlay, _]: GS = useContext(GameStateContext)
+    const [inPlay, _]: GSReducerType = useContext(GameStateContext)
     return (
-        <mesh>
-            {inPlay.map((c) => <Cube position={c} />)}
-        </mesh>
+        <group>
+            {inPlay.pieces.map((c) => <Cube position={c.position} owner={c.owner} />)}
+        </group>
     );
 }

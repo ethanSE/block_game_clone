@@ -1,22 +1,16 @@
-import { useState } from "react";
-import { coord } from "../hooks/useGameState";
+import { Coord, Player } from "../hooks/useGameState";
 
-export default function Cube(props: { position: coord }) {
-    // Hold state for hovered and clicked events
-    const [hovered, setHovered] = useState(false);
-
+export default function Cube(props: { position: Coord, owner: Player }) {
     return (
         <mesh
             position={props.position}
             onPointerOver={(event) => {
                 event.stopPropagation();
-                setHovered(true);
             }}
             onClick={(e) => e.stopPropagation()}
-            onPointerOut={(_) => setHovered(false)}
         >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+            <meshStandardMaterial color={props.owner === 'p1' ? "#000080" : "#008000"} />
         </mesh>
     );
 }
