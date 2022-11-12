@@ -1,4 +1,4 @@
-import { Coord, Player } from "../hooks/useGameState";
+import { Coord, Player } from "../types";
 
 export default function Cube(props: { position: Coord, owner: Player }) {
     return (

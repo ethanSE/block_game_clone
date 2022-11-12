@@ -8,10 +8,10 @@ import { GSReducerType } from "../hooks/useGameState";
 import Cube from "./Cube";
 
 export default function InPlayCubes() {
-    const [inPlay, _]: GSReducerType = useContext(GameStateContext)
+    const [gameState, _]: GSReducerType = useContext(GameStateContext)
     return (
         <group>
-            {inPlay.pieces.map((c) => <Cube position={c.position} owner={c.owner} />)}
+            {gameState.getPieces().map((c) => <Cube position={c.position} owner={c.owner} />)}
         </group>
     );
 }

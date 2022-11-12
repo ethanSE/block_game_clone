@@ -1,45 +1,32 @@
 import { useReducer } from 'react';
-
-export type Player = 'p1' | 'p2';
-export type Coord = [number, number, number];
-export type InPlayCube = { position: Coord, owner: Player };
+import { Coord, InPlayPiece } from '../types';
+import { GameState } from '../types/GameState';
 
 export type GameStateAction =
     {
         type: 'reset'
     } | {
         type: 'add',
-        newPiece: InPlayCube
+        position: Coord
     } | {
         type: 'passTurn'
     }
 
-export type GameState = {
-    currentPlayer: 'p1' | 'p2',
-    pieces: InPlayCube[]
-}
-export const defaultState: GameState = {
-    currentPlayer: 'p1',
-    pieces: []
-}
 
 //necessary to provide type hint to tsc
 export type GSReducerType = [GameState, (a: GameStateAction) => void];
 
 export function useGameState(): GSReducerType {
-    const [inPlay, dispatch] = useReducer(reducer, defaultState)
+    const [inPlay, dispatch] = useReducer(reducer, new GameState())
 
     function reducer(state: GameState, action: GameStateAction): GameState {
         switch (action.type) {
             case 'add':
-                return {
-                    currentPlayer: state.currentPlayer === 'p1' ? 'p2' : 'p1',
-                    pieces: [...state.pieces, action.newPiece]
-                }
+                return state.addPiece(action.position)
             case 'reset':
-                return defaultState;
+                return new GameState();
             case 'passTurn':
-                return { ...state, currentPlayer: state.currentPlayer === 'p1' ? 'p2' : 'p1' }
+                return state.passTurn()
 
         }
     }

@@ -18,10 +18,7 @@ export function BoardSquare(props: { position: [number, number] }) {
                 if (props.position) {
                     dispatch({
                         type: "add",
-                        newPiece: {
-                            position: [props.position[0], 0, props.position[1]],
-                            owner: GS.currentPlayer
-                        }
+                        position: [props.position[0], 0, props.position[1]]
                     })
                 }
             }

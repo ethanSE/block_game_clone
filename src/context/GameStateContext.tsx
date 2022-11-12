@@ -1,5 +1,6 @@
 import { createContext } from "react";
-import { defaultState, GSReducerType } from '../hooks/useGameState'
+import { GSReducerType } from '../hooks/useGameState'
+import { GameState } from "../types/GameState";
 
-const GameStateContext = createContext<GSReducerType>([defaultState, () => { }]);
+const GameStateContext = createContext<GSReducerType>([new GameState(), () => { }]);
 export default GameStateContext

@@ -12,7 +12,7 @@ function ActivePlayer() {
         <div className='activePlayer'>
             <div className='activePlayerRow'>
                 <h1>Current Player: </h1>
-                <div className={`${gameState.currentPlayer} playerColorIndicator`}></div>
+                <div className={`${gameState.getCurrentPlayer()} playerColorIndicator`}></div>
             </div>
             <button
                 onClick={() => dispatch({ type: "passTurn" })}
