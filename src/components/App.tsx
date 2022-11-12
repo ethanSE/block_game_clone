@@ -11,7 +11,7 @@ import InPlayCubes from './InPlayCubes'
 import ActivePlayer from './ActivePlayer';
 
 //styles
-import './App.css';
+import '../styles/App.css';
 
 
 function App() {

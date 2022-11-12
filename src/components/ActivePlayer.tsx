@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import GameStateContext from '../context/GameStateContext';
 
 //styles
-import './ActivePlayer.css';
+import '../styles/ActivePlayer.css';
 
 function ActivePlayer() {
     const [gameState, dispatch] = useContext(GameStateContext);
