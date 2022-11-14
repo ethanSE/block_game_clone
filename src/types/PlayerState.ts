@@ -23,7 +23,7 @@ export class PlayerState {
     }
 
     toggleCurrentPlayer(): PlayerState {
-        return new PlayerState(this.getOtherPlayer(), this.p1, this.p2)
+        return new PlayerState(this.getOtherPlayer(), this.p1.clearSelectedPiece(), this.p2.clearSelectedPiece())
     }
 
 

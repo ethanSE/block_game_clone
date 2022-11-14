@@ -52,6 +52,18 @@ export class PlayerHand {
         )
     }
 
+    clearSelectedPiece(): PlayerHand {
+        return pipe(
+            this.getSelectedPiece(),
+            O.match(
+                () => new PlayerHand(this.hand),
+                (selectedPiece) => new PlayerHand(
+                    { ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: 'available' } }
+                )
+            )
+        )
+    }
+
     static defaultHand: PiecesR =
         {
             'piece1': { status: 'available' },
