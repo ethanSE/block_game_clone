@@ -1,6 +1,6 @@
-import { Coord, Player } from "../types";
+import { Coord, PlayerID } from "../types";
 
-export default function Cube(props: { position: Coord, owner: Player }) {
+export default function Piece(props: { position: Coord, owner: PlayerID }) {
     return (
         <mesh
             position={props.position}

@@ -7,12 +7,12 @@ import { useGameState } from '../hooks/useGameState';
 //components
 import Board from './Board'
 import CustomCamera from './CustomCamera'
-import InPlayCubes from './InPlayCubes'
+import InPlayCubes from './InPlayPieces'
 import ActivePlayer from './ActivePlayer';
+import PieceSelectorContainer from './PieceSelector';
 
 //styles
 import '../styles/App.css';
-
 
 function App() {
     //hold game state here
@@ -30,6 +30,7 @@ function App() {
                     <Board />
                 </Canvas>
                 <ActivePlayer />
+                <PieceSelectorContainer />
             </GameStateContext.Provider>
         </div>
     );

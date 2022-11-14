@@ -1,16 +1,14 @@
-import { BaseTile, Coord, InPlayPiece, Player } from ".";
+import { BaseTile, Coord, InPlayPiece, PlayerID } from ".";
+import * as E from 'fp-ts/lib/Either'
 
 export class BoardState {
-    //holds the state of the board
-    //the board itself
-    //the pieces in play and their owners
     constructor(playArea = fourByFive, pieces: InPlayPiece[] = []) {
         this.playArea = playArea;
         this.piecesInPlay = pieces;
-    }
+    };
 
-    playArea: BaseTile[];
-    piecesInPlay: InPlayPiece[];
+    private readonly playArea: BaseTile[];
+    private readonly piecesInPlay: InPlayPiece[];
 
     getPlayArea(): BaseTile[] {
         return [...this.playArea]
@@ -20,15 +18,12 @@ export class BoardState {
         return this.piecesInPlay;
     }
 
-    addPiece(position: Coord, currentPlayer: Player): BoardState {
-        //validation logic
+    addPiece(position: Coord, currentPlayer: PlayerID): E.Either<BoardState, BoardState> {
+        //will perform validation logic
+        //or delegate this work to other method
+        //combine with move preview logic?
 
-        //separate methods for previewing a move and making a move
-
-        //state for in-play vs preview, separate display logic, expand/rename InPlayPiece type
-
-        //return new BoardState
-        return new BoardState(this.playArea, [...this.piecesInPlay, { position: position, owner: currentPlayer }])
+        return E.right(new BoardState(this.playArea, [...this.piecesInPlay, { position: position, owner: currentPlayer }]))
     }
 }
 
