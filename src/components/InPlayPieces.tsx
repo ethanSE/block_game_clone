@@ -8,10 +8,10 @@ import { GSReducerType } from "../hooks/useGameState";
 import Piece from "./Piece";
 
 export default function InPlayPieces() {
-    const [gameState, _]: GSReducerType = useContext(GameStateContext)
+    const [gameState]: GSReducerType = useContext(GameStateContext)
     return (
         <group>
-            {gameState.getPieces().map((piece) => <Piece position={piece.position} owner={piece.owner} />)}
+            {gameState.getPieces().map((piece) => <Piece key={`${piece.owner}${piece.position}`} position={piece.position} owner={piece.owner} />)}
         </group>
     );
 }

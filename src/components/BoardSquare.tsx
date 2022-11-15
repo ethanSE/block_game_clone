@@ -4,7 +4,7 @@ import GameStateContext from '../context/GameStateContext';
 
 export function BoardSquare(props: { position: [number, number] }) {
     const [hovered, setHovered] = useState(false);
-    const [GS, dispatch] = useContext(GameStateContext);
+    const [_, dispatch] = useContext(GameStateContext);
     return (
         <mesh
             position={[props.position[0], -.6, props.position[1]]}

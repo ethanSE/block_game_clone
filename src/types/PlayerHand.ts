@@ -41,25 +41,19 @@ export class PlayerHand {
     }
 
     playSelectedPiece(): PlayerHand {
-        return pipe(
-            this.getSelectedPiece(),
-            O.match(
-                () => new PlayerHand(this.hand),
-                (selectedPiece) => new PlayerHand(
-                    { ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: 'unavailable' } }
-                )
-            )
-        )
+        return this.updateSelectedPiece('unavailable');
     }
 
     clearSelectedPiece(): PlayerHand {
+        return this.updateSelectedPiece('available');
+    }
+
+    private updateSelectedPiece(newStatus: Status): PlayerHand {
         return pipe(
             this.getSelectedPiece(),
             O.match(
-                () => new PlayerHand(this.hand),
-                (selectedPiece) => new PlayerHand(
-                    { ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: 'available' } }
-                )
+                () => this,
+                (selectedPiece) => new PlayerHand({ ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: newStatus } })
             )
         )
     }

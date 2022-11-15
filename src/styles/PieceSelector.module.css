@@ -3,7 +3,6 @@
     position: absolute;
     bottom: 0px;
     display: flex;
-    background-color: teal;
     justify-content: space-between;
 }
 
@@ -11,14 +10,9 @@
     padding: 5px;
     max-width: 45%;
     display: grid;
-
-
     grid-template-columns: repeat(auto-fit, 50px);
     grid-auto-flow: row; 
-
-
     gap: 5px;
-    background-color: tan;
 }
 
 .p1 {
@@ -38,29 +32,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
     border: 2px solid gold;
 }
 
 .available {
     composes: piece;
     background-color: teal;
-
 }
 
 .selected {
     composes: piece;
     background-color: green;
-
 }
 
 .unavailable {
     composes: piece;
     background-color: grey;
-
 }
-
-.glow {
-    box-shadow: 0px 0px 10px 5px #0ff;
-}
-

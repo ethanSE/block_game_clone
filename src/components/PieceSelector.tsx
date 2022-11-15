@@ -10,7 +10,6 @@ import { PlayerID } from "../types";
 import { Piece } from "../types/PlayerHand";
 
 export default function PieceSelectorContainer() {
-
     return (
         <div className={css.pieceSelectorContainer}>
             <PieceSelector playerID='p1' />
