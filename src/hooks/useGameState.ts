@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { Coord, PlayerID } from '../types';
 import { GameState } from '../types/GameState';
-import { PieceName } from '../types/PlayerHand';
+import { PieceName } from '../types/Piece';
 
 export type GameStateAction =
     {

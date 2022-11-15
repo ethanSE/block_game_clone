@@ -2,6 +2,8 @@ import { toEntries, fromEntries } from 'fp-ts/Record'
 import * as O from 'fp-ts/Option'
 import { pipe } from 'fp-ts/function'
 import { findFirst } from 'fp-ts/Array'
+import { PiecesR } from '.';
+import { Piece, PieceName, PieceData, Status } from './Piece';
 
 export class PlayerHand {
     constructor(hand: PiecesR = PlayerHand.defaultHand) {
@@ -73,28 +75,3 @@ export class PlayerHand {
             'piece11': { status: 'available' }
         }
 }
-
-export type PiecesR = Readonly<Record<PieceName, PieceData>>
-
-export type PieceName =
-    'piece1'
-    | 'piece2'
-    | 'piece3'
-    | 'piece4'
-    | 'piece5'
-    | 'piece6'
-    | 'piece7'
-    | 'piece8'
-    | 'piece9'
-    | 'piece10'
-    | 'piece11'
-
-export type PieceData = {
-    status: Status
-}
-
-export type Piece = {
-    name: PieceName
-} & PieceData
-
-export type Status = 'available' | 'selected' | 'unavailable';

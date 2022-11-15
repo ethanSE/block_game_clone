@@ -1,5 +1,6 @@
-import { PlayerID } from ".";
-import { PieceName, PlayerHand } from "./PlayerHand";
+import { PlayerID, PlayerHands } from ".";
+import { PieceName } from "./Piece";
+import { PlayerHand } from "./PlayerHand";
 export class PlayerState {
     constructor(
         currentPlayer: PlayerID = 'p1',
@@ -26,13 +27,11 @@ export class PlayerState {
         return new PlayerState(this.getOtherPlayer(), this.p1.clearSelectedPiece(), this.p2.clearSelectedPiece())
     }
 
-
     getPlayerHand(id: PlayerID) {
         return id === 'p1' ? this.p1.getHand() : this.p2.getHand();
     }
 
     selectPiece(piece: PieceName): PlayerState {
-        console.log('current player in selectPiece in PlayerState: ', this.currentPlayer)
         if (this.currentPlayer === 'p1') {
             return new PlayerState(this.currentPlayer, this.p1.setSelectedPiece(piece), new PlayerHand(this.p2.hand));
         } else {
@@ -61,5 +60,3 @@ export class PlayerState {
 
     static initialHandState: PlayerHands = { 'p1': new PlayerHand(), 'p2': new PlayerHand() } as const
 }
-
-type PlayerHands = Record<PlayerID, PlayerHand>

@@ -7,7 +7,7 @@ import { GSReducerType } from "../hooks/useGameState";
 //styles
 import css from '../styles/PieceSelector.module.css'
 import { PlayerID } from "../types";
-import { Piece } from "../types/PlayerHand";
+import { Piece } from "../types/Piece";
 
 export default function PieceSelectorContainer() {
     return (

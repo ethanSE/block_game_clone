@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { BaseTile, Coord, InPlayPiece, PlayerID } from ".";
 import { BoardState } from "./BoardState";
-import { PieceName } from "./PlayerHand";
+import { PieceName } from "./Piece";
 import { PlayerState } from "./PlayerState";
 export class GameState {
     constructor(
