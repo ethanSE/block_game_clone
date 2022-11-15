@@ -3,20 +3,21 @@ import { useContext } from 'react';
 import GameStateContext from '../context/GameStateContext';
 
 //styles
-import '../styles/ActivePlayer.css';
+import css from '../styles/ActivePlayer.module.css';
 
 function ActivePlayer() {
     const [gameState, dispatch] = useContext(GameStateContext);
+    const currentPlayer = gameState.getCurrentPlayer();
 
     return (
-        <div className='activePlayer'>
-            <div className='activePlayerRow'>
+        <div className={css['activePlayer']}>
+            <div className={css['activePlayerRow']}>
                 <h1>Current Player: </h1>
-                <div className={`${gameState.getCurrentPlayer()} playerColorIndicator`}></div>
+                <div className={css[currentPlayer]}></div>
             </div>
             <button
                 onClick={() => dispatch({ type: "passTurn" })}
-                className={'PassButton'}
+                className={css.passButton}
             >Pass Turn</button>
         </div>
     );

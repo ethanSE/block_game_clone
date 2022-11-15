@@ -1,0 +1,51 @@
+.pieceSelectorContainer {
+    width: 100vw;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.pieceGroup {
+    padding: 5px;
+    max-width: 45%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50px);
+    grid-auto-flow: row; 
+    gap: 5px;
+}
+
+.p1 {
+    composes: pieceGroup;
+    background-color:#000080
+}
+
+.p2 {
+    composes: pieceGroup;
+    background-color: #008000;
+}
+
+.piece {
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid gold;
+}
+
+.available {
+    composes: piece;
+    background-color: teal;
+}
+
+.selected {
+    composes: piece;
+    background-color: green;
+}
+
+.unavailable {
+    composes: piece;
+    background-color: grey;
+}
