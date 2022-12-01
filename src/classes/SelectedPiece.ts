@@ -15,7 +15,7 @@ export class SelectedPiece {
 
     applyRotation(rotation: RotationDirection): SelectedPiece {
         const InputRotation = new Quaternion().setFromAxisAngle(rotation, Math.PI / 2);
-        const newRotation = this.rotation.clone().multiply(InputRotation)
+        const newRotation = this.rotation.clone().premultiply(InputRotation)
         return new SelectedPiece(this.piece, newRotation)
     }
 
