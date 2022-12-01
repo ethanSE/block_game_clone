@@ -1,8 +1,5 @@
-import { useFrame } from '@react-three/fiber'
-import { useThree } from '@react-three/fiber';
 import { OrthographicCamera, OrbitControls } from '@react-three/drei';
 import { Vector3 } from 'three';
-import { useRef } from 'react';
 
 //prevents camera from going below just above the plane of the board
 //under the board is not useful and disorienting
@@ -14,23 +11,6 @@ const defaultBoardCenter: Vector3 = new Vector3(2, 0, 1.5);
 
 
 export default function CustomCamera() {
-    // const { camera } = useThree();
-
-    // // const a = new Vector3(0, 1, 0);
-
-    // const getQuat = console.log(camera)
-    // let a = 0;
-    // useFrame((state, delta, xrFrame) => {
-    //     if (delta) {
-    //         a += 1;
-    //         if (a % 100 === 0) {
-    //             console.log(delta)
-    //             console.log(state.camera.quaternion)
-    //         }
-    //     }
-    // })
-    // const r = useRef<typeof OrthographicCamera>(null!)
-    // console.log(r)
     return (
         <>
             <OrthographicCamera
@@ -39,7 +19,6 @@ export default function CustomCamera() {
                 zoom={60}
             />
             <OrbitControls
-                // onChange={() => console.log(props.cameraRef)}
                 target={defaultBoardCenter}
                 panSpeed={1}
                 maxAzimuthAngle={Number.POSITIVE_INFINITY} //can spin board

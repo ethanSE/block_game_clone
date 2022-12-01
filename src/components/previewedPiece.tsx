@@ -16,7 +16,8 @@ export default function PreviewedPiece() {
     const coords = O.getOrElse(() => [] as Coord[])(gameState.getSelectedPieceCoords())
     const currentPlayer = gameState.getCurrentPlayer()
     return (
-        <Center>
+        <Center position={[2, 0, 1.5]}>
+            <color attach="background" args={['#576231']} />
             <mesh>
                 {coords.map((coord) => <Piece key={`${currentPlayer}${coord}`} position={coord} owner={currentPlayer} />)}
             </mesh>
