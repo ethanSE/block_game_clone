@@ -7,23 +7,38 @@ import { GSReducerType } from "../hooks/useGameState";
 //styles
 import css from '../styles/PieceSelector.module.css'
 import { PlayerID } from "../types";
-import { Piece } from "../types/Piece";
+import { Piece } from "../classes/Piece";
 
 export default function PieceSelectorContainer() {
+    const [gameState]: GSReducerType = useContext(GameStateContext)
+    const currentPlayer = gameState.getCurrentPlayer()
     return (
         <div className={css.pieceSelectorContainer}>
-            <PieceSelector playerID='p1' />
-            <PieceSelector playerID='p2' />
+            <PieceSelector playerID='p1' currentPlayer={currentPlayer === 'p1'} />
+            <PassTurnButton />
+            <PieceSelector playerID='p2' currentPlayer={currentPlayer === 'p2'} />
         </div>
     );
 }
 
-function PieceSelector(props: { playerID: PlayerID }) {
+function PassTurnButton() {
+    const [_, dispatch] = useContext(GameStateContext);
+    return (
+        <button
+            onClick={() => dispatch({ type: "passTurn" })}
+            className={css.passButton}
+        >
+            Pass Turn
+        </button>
+    )
+}
+
+function PieceSelector(props: { playerID: PlayerID, currentPlayer: boolean }) {
     const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
     const pieces = gameState.getPlayerPieces(props.playerID)
 
     return (
-        <div className={css[props.playerID]}>
+        <div className={props.currentPlayer ? css[`${props.playerID}Active`] : css[props.playerID]}>
             {
                 pieces.map((piece) =>
                     <PieceSelectorItem

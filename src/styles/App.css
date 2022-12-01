@@ -1,8 +1,9 @@
 .website { 
-    background-color: blanchedalmond; 
+    background-color: blanchedalmond;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     overflow-y: auto;
-  
     /* hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;
     scrollbar-width: none;
