@@ -8,19 +8,29 @@ import { GSReducerType } from "../hooks/useGameState";
 //Components
 import Piece from "./Piece";
 import { Coord } from "../types";
-import { Center } from "@react-three/drei";
+import { Box, Center } from "@react-three/drei";
+import { Vector3 } from "three";
 
 export default function PreviewedPiece() {
     const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
-
     const coords = O.getOrElse(() => [] as Coord[])(gameState.getSelectedPieceCoords())
     const currentPlayer = gameState.getCurrentPlayer()
+
+    const rotateY = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(0, 1, 0) })
+
     return (
-        <Center position={[2, 0, 1.5]}>
-            <color attach="background" args={['#576231']} />
-            <mesh>
-                {coords.map((coord) => <Piece key={`${currentPlayer}${coord}`} position={coord} owner={currentPlayer} />)}
-            </mesh>
-        </Center>
+        <>
+            <Box
+                onClick={rotateY}
+                position={[0, 3, 0]}
+            >
+                <meshBasicMaterial color="hotpink" />
+            </Box>
+            <Center>
+                <group>
+                    {coords.map((coord) => <Piece key={JSON.stringify(coord)} position={coord} owner={currentPlayer} />)}
+                </group>
+            </Center >
+        </>
     );
 }

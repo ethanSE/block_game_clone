@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'
+import { Vector3 } from 'three';
 //state/context
 import GameStateContext from '../context/GameStateContext';
 
@@ -18,7 +19,7 @@ export function BoardSquare(props: { position: [number, number] }) {
                 if (props.position) {
                     dispatch({
                         type: "add",
-                        position: [props.position[0], 0, props.position[1]]
+                        position: new Vector3(props.position[0], 0, props.position[1])
                     })
                 }
             }

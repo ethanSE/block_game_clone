@@ -8,13 +8,16 @@ import { GSReducerType } from "../hooks/useGameState";
 //Components
 import { BoardSquare } from './BoardSquare';
 import InPlayPieces from "./InPlayPieces";
+import { Vector3 } from "three";
 
 export default function GameBoard() {
     const [gameState, _]: GSReducerType = useContext(GameStateContext)
 
+    //not prefered long-term solution
+    const negativeDefaultBoardCenter = new Vector3(-2, 0, -1.5)
     const baseTiles = gameState.getBaseTiles()
     return (
-        <Center position={[0, 0, 0]}>
+        <Center position={negativeDefaultBoardCenter}>
             <InPlayPieces />
             {
                 baseTiles.map((item, index) =>

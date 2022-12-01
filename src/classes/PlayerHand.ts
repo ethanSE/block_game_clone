@@ -4,7 +4,8 @@ import { pipe } from 'fp-ts/function'
 import { findFirst } from 'fp-ts/Array'
 import { Coord, PiecesR } from '../types';
 import { Piece, PieceName, Status } from './Piece';
-import { Rotation, SelectedPiece } from './SelectedPiece';
+import { RotationDirection, SelectedPiece } from './SelectedPiece';
+import { Vector3 } from 'three';
 
 export class PlayerHand {
     constructor(
@@ -18,7 +19,7 @@ export class PlayerHand {
     private readonly hand: PiecesR
     private readonly selectedPiece?: SelectedPiece
 
-    rotateSelectedPiece(rotation: Rotation): PlayerHand {
+    rotateSelectedPiece(rotation: RotationDirection): PlayerHand {
         if (this.selectedPiece) {
             return new PlayerHand(this.hand, this.selectedPiece.applyRotation(rotation))
         } else {
@@ -80,16 +81,18 @@ export class PlayerHand {
 
     static defaultHand: PiecesR =
         {
-            '1x2': { name: '1x2', status: 'available', cubes: [[0, 0, 0], [0, 0, 1]] },
-            '1x3': { name: '1x3', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 0, 2]] },
-            '1x4': { name: '1x4', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3]] },
-            '2x2': { name: '2x2', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]] },
-            'Z': { name: 'Z', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2]] },
-            'T': { name: 'T', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2]] },
-            'L': { name: 'L', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 2]] },
-            'shortL': { name: 'shortL', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1]] },
-            'rightScrew': { name: 'rightScrew', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 1, 1]] },
-            'leftScrew': { name: 'leftScrew', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [-1, 1, 1]] },
-            'otherOne': { name: 'otherOne', status: 'available', cubes: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 1]] }
+            '1x2': {
+                name: '1x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1)]
+            },
+            '1x3': { name: '1x3', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2)] },
+            '1x4': { name: '1x4', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 0, 3)] },
+            '2x2': { name: '2x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 0), new Vector3(0, 1, 1)] },
+            'Z': { name: 'Z', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 1, 2)] },
+            'T': { name: 'T', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 0, 2)] },
+            'L': { name: 'L', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 1, 2)] },
+            'shortL': { name: 'shortL', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1)] },
+            'rightScrew': { name: 'rightScrew', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(1, 1, 1)] },
+            'leftScrew': { name: 'leftScrew', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(-1, 1, 1)] },
+            'otherOne': { name: 'otherOne', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(1, 0, 1)] }
         }
 }

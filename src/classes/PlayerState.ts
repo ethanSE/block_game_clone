@@ -1,7 +1,7 @@
 import { PlayerID, PlayerHands, Coord } from "../types";
 import { PieceName } from "./Piece";
 import { PlayerHand } from "./PlayerHand";
-import { Rotation } from "./SelectedPiece";
+import { RotationDirection } from "./SelectedPiece";
 import * as O from 'fp-ts/Option'
 export class PlayerState {
     constructor(
@@ -45,11 +45,11 @@ export class PlayerState {
         return this.currentPlayer === 'p1' ? this.p1.getSelectedPieceName() : this.p2.getSelectedPieceName()
     }
 
-    rotateSelectedPiece(rotation: Rotation): PlayerState {
+    rotateSelectedPiece(rotation: RotationDirection): PlayerState {
         if (this.currentPlayer === 'p1') {
             return new PlayerState(this.currentPlayer, this.p1.rotateSelectedPiece(rotation), this.p2);
         } else {
-            return new PlayerState(this.currentPlayer, this.p1, this.p1.rotateSelectedPiece(rotation))
+            return new PlayerState(this.currentPlayer, this.p1, this.p2.rotateSelectedPiece(rotation))
         }
     }
 

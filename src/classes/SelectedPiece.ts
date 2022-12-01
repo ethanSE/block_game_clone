@@ -1,35 +1,25 @@
-import { Quaternion } from "three";
+import { Quaternion, Vector3 } from "three";
 import { Coord } from "../types";
 import { Piece } from "./Piece";
 
-export type Rotation = {}
+export type RotationDirection = Vector3;
 
 export class SelectedPiece {
-    constructor(piece: Piece) {
+    constructor(piece: Piece, rotation: Quaternion = new Quaternion()) {
         this.piece = piece;
+        this.rotation = rotation;
     }
 
     private readonly piece: Piece
+    private readonly rotation: Quaternion;
 
-    // private readonly rotation: Quaternion;
-
-
-    // contains a default rotation
-
-    // rotations are applied to the rotation
-
-    //the rotation is applied to the Piece - the piece is never changed
-
-
-    applyRotation(rotation: Rotation): SelectedPiece {
-        //TODO Implement
-
-        //use Three.js quaternions
-        return this;
+    applyRotation(rotation: RotationDirection): SelectedPiece {
+        const InputRotation = new Quaternion().setFromAxisAngle(rotation, Math.PI / 2);
+        const newRotation = this.rotation.clone().multiply(InputRotation)
+        return new SelectedPiece(this.piece, newRotation)
     }
 
     getPositions(): Coord[] {
-        //TODO Implement
-        return this.piece.cubes
+        return this.piece.cubes.map((coord) => coord.clone().applyQuaternion(this.rotation));
     }
 }
