@@ -13,7 +13,6 @@ import PreviewedPiece from './previewedPiece';
 import { Canvas } from '@react-three/fiber';
 import GameBoard from './GameBoard';
 import CustomCamera from './CustomCamera';
-import { Coord } from '../types';
 import { Vector3 } from 'three';
 
 function App() {
@@ -58,27 +57,25 @@ function PlayArea(props: { gameAreaDivRef: React.MutableRefObject<never> }) {
 }
 
 function PieceRotateArea(props: { pieceRotateDivRef: React.MutableRefObject<never> }) {
-    const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
+    const [_, dispatch]: GSReducerType = useContext(GameStateContext)
 
-    const plusX = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(1, 0, 0) })
-    const minusX = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(1, 0, 0) })
-
+    const rotateX = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(1, 0, 0) })
+    const rotateY = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(0, 1, 0) })
 
     return (
         <View index={2} track={props.pieceRotateDivRef}>
             <Box
-                position={[4, 0, 0]}
-                onClick={plusX}
+                onClick={rotateX}
+                position={[3, 0, 0]}
             >
                 <meshBasicMaterial color="orange" />
             </Box>
             <Box
-                position={[-4, 0, 0]}
-                onClick={minusX}
+                onClick={rotateY}
+                position={[0, 3, 0]}
             >
-                <meshBasicMaterial color="orange" />
+                <meshBasicMaterial color="hotpink" />
             </Box>
-
             <ambientLight intensity={0.5} />
             <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />

@@ -14,3 +14,10 @@ from docs at https://github.com/pmndrs/drei#view
 
 use of billboard , plane, from
 https://drei.pmnd.rs/?path=/story/abstractions-billboard--billboard-story
+
+Wikipedia quaternions
+
+3blue1brown video on quaternions
+
+//I was composing multiplying quaternions in the wrong order and this helped me realize that and break through
+https://gamedev.stackexchange.com/questions/188319/combining-quaternion-rotations
