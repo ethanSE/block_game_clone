@@ -1,8 +1,9 @@
 import * as O from "fp-ts/lib/Option";
-import { BaseTile, Coord, InPlayPiece, PlayerID } from ".";
+import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
 import { BoardState } from "./BoardState";
 import { PieceName } from "./Piece";
 import { PlayerState } from "./PlayerState";
+import { Rotation } from "./SelectedPiece";
 export class GameState {
     constructor(
         playerState: PlayerState = new PlayerState(),
@@ -31,12 +32,16 @@ export class GameState {
         return this.playerState.getPlayerHand(id);
     }
 
-    getSelectedPiece(id: PlayerID) {
-        return this.playerState.getSelectedPiece()
+    getSelectedPiece() {
+        return this.playerState.getSelectedPieceName()
+    }
+
+    getSelectedPieceCoords() {
+        return this.playerState.getSelectedPieceCoords()
     }
 
     playSelectedPiece(position: Coord): GameState {
-        const selectedPiece = this.playerState.getSelectedPiece();
+        const selectedPiece = this.playerState.getSelectedPieceName();
 
         const calcNewState = () => {
             const newBoardState = new BoardState(
@@ -65,5 +70,9 @@ export class GameState {
 
     passTurn(): GameState {
         return new GameState(this.playerState.toggleCurrentPlayer(), this.boardState);
+    }
+
+    rotateSelectedPiece(rotation: Rotation): GameState {
+        return new GameState(this.playerState.rotateSelectedPiece(rotation), this.boardState);
     }
 }

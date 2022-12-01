@@ -1,4 +1,4 @@
-import { BaseTile, Coord, InPlayPiece, PlayerID } from ".";
+import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
 import * as E from 'fp-ts/lib/Either'
 
 export class BoardState {
