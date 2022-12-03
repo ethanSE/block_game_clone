@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import { Coord, PlayerID } from '../types';
 import { GameState } from '../classes/GameState';
 import { PieceName } from '../classes/Piece';
-import { RotationDirection } from '../classes/SelectedPiece';
+import { RotationAxis } from '../classes/SelectedPiece';
 
 export type GameStateAction =
     {
@@ -18,7 +18,7 @@ export type GameStateAction =
         piece: PieceName
     } | {
         type: 'rotateSelectedPiece'
-        rotation: RotationDirection
+        axis: RotationAxis
     }
 
 //necessary to provide type hint to tsc
@@ -38,7 +38,7 @@ export function useGameState(): GSReducerType {
             case 'passTurn':
                 return state.passTurn();
             case 'rotateSelectedPiece':
-                return state.rotateSelectedPiece(action.rotation)
+                return state.rotateSelectedPiece(action.axis)
         }
     }
 

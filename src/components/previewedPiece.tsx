@@ -11,7 +11,7 @@ import { Coord } from "../types";
 import { Center } from "@react-three/drei";
 
 export default function PreviewedPiece() {
-    const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
+    const [gameState, _]: GSReducerType = useContext(GameStateContext)
     const coords = O.getOrElse(() => [] as Coord[])(gameState.getSelectedPieceCoords())
     const currentPlayer = gameState.getCurrentPlayer()
 

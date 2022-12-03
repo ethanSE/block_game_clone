@@ -11,7 +11,14 @@ export default function InPlayPieces() {
     const [gameState]: GSReducerType = useContext(GameStateContext)
     return (
         <group>
-            {gameState.getPieces().map((piece) => <Piece key={JSON.stringify(piece.position)} position={piece.position} owner={piece.owner} />)}
+            {gameState.getPieces().map(
+                (piece) =>
+                    <Piece
+                        key={JSON.stringify(piece.position)}
+                        position={piece.position}
+                        owner={piece.owner}
+                    />
+            )}
         </group>
     );
 }

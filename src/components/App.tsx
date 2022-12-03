@@ -1,19 +1,14 @@
+import { useRef } from 'react';
 //state/context
 import GameStateContext from '../context/GameStateContext';
-import { GSReducerType, useGameState } from '../hooks/useGameState';
+import { useGameState } from '../hooks/useGameState';
 
 //components
 import PieceSelectorContainer from './PieceSelector';
+import GameCanvas from './GameCanvas';
 
 //styles
 import '../styles/App.css';
-import { Billboard, Box, Plane, ScreenSpace, View } from '@react-three/drei';
-import { useContext, useRef } from 'react';
-import PreviewedPiece from './previewedPiece';
-import { Canvas } from '@react-three/fiber';
-import GameBoard from './GameBoard';
-import CustomCamera from './CustomCamera';
-import { Vector3 } from 'three';
 
 function App() {
     const gameState = useGameState()
@@ -26,62 +21,13 @@ function App() {
             <div ref={containerDivRef} className='website'>
                 <div ref={pieceRotateDivRef} style={{ width: '100vw', height: '50%' }} />
                 <div ref={gameAreaDivRef} style={{ position: 'relative', width: '100vw', height: '50%' }} />
-                <Canvas eventSource={document.getElementById('root')!} className='canvas' style={{ pointerEvents: 'none' }}>
-                    <GameCanvas gameAreaDivRef={gameAreaDivRef} pieceRotateDivRef={pieceRotateDivRef} />
-                </Canvas>
+                <GameCanvas gameAreaDivRef={gameAreaDivRef} pieceRotateDivRef={pieceRotateDivRef} />
                 <PieceSelectorContainer />
             </div>
         </GameStateContext.Provider >
     );
 }
 
-function GameCanvas(props: { gameAreaDivRef: React.MutableRefObject<never>, pieceRotateDivRef: React.MutableRefObject<never> }) {
-    return (
-        <>
-            <CustomCamera />
-            <PieceRotateArea pieceRotateDivRef={props.pieceRotateDivRef} />
-            <PlayArea gameAreaDivRef={props.gameAreaDivRef} />
-        </>
-    )
-}
 
-function PlayArea(props: { gameAreaDivRef: React.MutableRefObject<never> }) {
-    return (
-        <View index={1} track={props.gameAreaDivRef}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-            <GameBoard />
-        </View>
-    )
-}
-
-function PieceRotateArea(props: { pieceRotateDivRef: React.MutableRefObject<never> }) {
-    const [_, dispatch]: GSReducerType = useContext(GameStateContext)
-
-    const rotateX = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(1, 0, 0) })
-    const rotateY = () => dispatch({ type: 'rotateSelectedPiece', rotation: new Vector3(0, 1, 0) })
-
-    return (
-        <View index={2} track={props.pieceRotateDivRef}>
-            <Box
-                onClick={rotateX}
-                position={[3, 0, 0]}
-            >
-                <meshBasicMaterial color="orange" />
-            </Box>
-            <Box
-                onClick={rotateY}
-                position={[0, 3, 0]}
-            >
-                <meshBasicMaterial color="hotpink" />
-            </Box>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-            <PreviewedPiece />
-        </View>
-    )
-}
 
 export default App;

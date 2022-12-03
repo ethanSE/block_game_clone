@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/function'
 import { findFirst } from 'fp-ts/Array'
 import { Coord, PiecesR } from '../types';
 import { Piece, PieceName, Status } from './Piece';
-import { RotationDirection, SelectedPiece } from './SelectedPiece';
+import { RotationAxis, SelectedPiece } from './SelectedPiece';
 import { Vector3 } from 'three';
 
 export class PlayerHand {
@@ -19,7 +19,7 @@ export class PlayerHand {
     private readonly hand: PiecesR
     private readonly selectedPiece?: SelectedPiece
 
-    rotateSelectedPiece(rotation: RotationDirection): PlayerHand {
+    rotateSelectedPiece(rotation: RotationAxis): PlayerHand {
         if (this.selectedPiece) {
             return new PlayerHand(this.hand, this.selectedPiece.applyRotation(rotation))
         } else {

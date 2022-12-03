@@ -3,7 +3,7 @@ import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
 import { BoardState } from "./BoardState";
 import { PieceName } from "./Piece";
 import { PlayerState } from "./PlayerState";
-import { RotationDirection } from "./SelectedPiece";
+import { RotationAxis } from "./SelectedPiece";
 export class GameState {
     constructor(
         playerState: PlayerState = new PlayerState(),
@@ -72,7 +72,7 @@ export class GameState {
         return new GameState(this.playerState.toggleCurrentPlayer(), this.boardState);
     }
 
-    rotateSelectedPiece(rotation: RotationDirection): GameState {
+    rotateSelectedPiece(rotation: RotationAxis): GameState {
         return new GameState(this.playerState.rotateSelectedPiece(rotation), this.boardState);
     }
 }
