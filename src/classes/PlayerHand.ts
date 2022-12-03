@@ -39,7 +39,7 @@ export class PlayerHand {
         return this.hand;
     }
 
-    getSelectedPieceName() {
+    getSelectedPiece() {
         return findFirst((elem: Piece) => elem.status === 'selected')(this.getHandList());
     }
 
@@ -71,7 +71,7 @@ export class PlayerHand {
 
     private unsetSelectedPieceAndUpdateStatus(newStatus: Status): PlayerHand {
         return pipe(
-            this.getSelectedPieceName(),
+            this.getSelectedPiece(),
             O.match(
                 () => this,
                 (selectedPiece) => new PlayerHand({ ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: newStatus } })
@@ -81,9 +81,7 @@ export class PlayerHand {
 
     static defaultHand: PiecesR =
         {
-            '1x2': {
-                name: '1x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1)]
-            },
+            '1x2': { name: '1x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1)] },
             '1x3': { name: '1x3', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2)] },
             '1x4': { name: '1x4', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 0, 3)] },
             '2x2': { name: '2x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 0), new Vector3(0, 1, 1)] },

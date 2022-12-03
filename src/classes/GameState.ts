@@ -32,16 +32,12 @@ export class GameState {
         return this.playerState.getPlayerHand(id);
     }
 
-    getSelectedPiece() {
-        return this.playerState.getSelectedPieceName()
-    }
-
     getSelectedPieceCoords() {
         return this.playerState.getSelectedPieceCoords()
     }
 
     playSelectedPiece(position: Coord): GameState {
-        const selectedPiece = this.playerState.getSelectedPieceName();
+        const selectedPiece = this.playerState.getSelectedPiece();
 
         const calcNewState = () => {
             const newBoardState = new BoardState(

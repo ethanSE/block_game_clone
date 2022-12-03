@@ -41,7 +41,7 @@ export class PlayerState {
         }
     }
 
-    getSelectedPieceName() {
+    getSelectedPiece() {
         return this.currentPlayer === 'p1' ? this.p1.getSelectedPieceName() : this.p2.getSelectedPieceName()
     }
 
