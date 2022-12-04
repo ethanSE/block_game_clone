@@ -21,7 +21,7 @@ export class PlayerState {
         return this.currentPlayer;
     }
 
-    getOtherPlayer(): PlayerID {
+    private getOtherPlayer(): PlayerID {
         return this.currentPlayer === 'p1' ? 'p2' : 'p1'
     }
 
