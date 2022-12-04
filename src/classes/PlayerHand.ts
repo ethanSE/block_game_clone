@@ -1,96 +1,76 @@
-import { toEntries, map } from 'fp-ts/Record'
+import { toEntries } from 'fp-ts/Record'
 import * as O from 'fp-ts/Option'
-import { pipe } from 'fp-ts/function'
-import { findFirst } from 'fp-ts/Array'
 import { Coord, PiecesR } from '../types';
-import { Piece, PieceName, Status } from './Piece';
-import { RotationAxis, SelectedPiece } from './SelectedPiece';
-import { Vector3 } from 'three';
+import { PieceName, RotationAxis, Piece } from './Piece';
 
 export class PlayerHand {
     constructor(
-        hand: PiecesR = PlayerHand.defaultHand,
-        selectedPiece?: SelectedPiece
+        hand: PiecesR,
+        selectedPiece: O.Option<PieceName>
     ) {
         this.hand = hand;
         this.selectedPiece = selectedPiece;
     }
 
     private readonly hand: PiecesR
-    private readonly selectedPiece?: SelectedPiece
+    private readonly selectedPiece: O.Option<PieceName>
 
     rotateSelectedPiece(rotation: RotationAxis): PlayerHand {
-        if (this.selectedPiece) {
-            return new PlayerHand(this.hand, this.selectedPiece.applyRotation(rotation))
-        } else {
-            return this
-        }
+        return O.fold(
+            (): PlayerHand => this,
+            (selected: PieceName) => new PlayerHand({ ...this.hand, [selected]: this.hand[selected].rotate(rotation) }, O.of(selected))
+        )(this.selectedPiece)
     }
 
     getSelectedPieceCoords(): O.Option<Coord[]> {
-        return O.fromNullable(this.selectedPiece?.getPositions())
+        return O.map(
+            (selected: PieceName) => this.hand[selected].getCoords()
+        )(this.selectedPiece)
     }
 
-    getHandList(): Piece[] {
-        return toEntries(this.hand).map(([_, data]) => ({ ...data }))
+    getHandList() {
+        return toEntries(this.hand)
     }
 
-    getHandRecord(): PiecesR {
-        return this.hand;
-    }
-
-    getSelectedPiece() {
-        return findFirst((elem: Piece) => elem.status === 'selected')(this.getHandList());
+    getSelectedPieceName() {
+        return this.selectedPiece
     }
 
     setSelectedPiece(pieceName: PieceName): PlayerHand {
-        if (this.hand[pieceName].status === 'available') {
-            const newHand: PiecesR =
-                map(({ status, name, ...rest }: Piece): Piece => {
-                    if (status === 'unavailable') {
-                        return { status, name, ...rest };
-                    } else if (name === pieceName) {
-                        return { status: 'selected', name, ...rest }
-                    } else {
-                        return { status: 'available', name, ...rest }
-                    }
-                })(this.hand)
-            return new PlayerHand(newHand, new SelectedPiece(newHand[pieceName]))
+        if (this.hand[pieceName].isAvailable()) {
+            return new PlayerHand(this.hand, O.of(pieceName))
         } else {
             return this
         }
     }
 
+    clearSelectedPiece() {
+        return new PlayerHand(this.hand, O.none)
+    }
+
     playSelectedPiece(): PlayerHand {
-        return this.unsetSelectedPieceAndUpdateStatus('unavailable');
-    }
-
-    clearSelectedPiece(): PlayerHand {
-        return this.unsetSelectedPieceAndUpdateStatus('available');
-    }
-
-    private unsetSelectedPieceAndUpdateStatus(newStatus: Status): PlayerHand {
-        return pipe(
-            this.getSelectedPiece(),
-            O.match(
-                () => this,
-                (selectedPiece) => new PlayerHand({ ...this.hand, [selectedPiece.name]: { ...this.hand[selectedPiece.name], status: newStatus } })
-            )
-        )
+        return O.fold(
+            () => this,
+            (selected: PieceName) => new PlayerHand({ ...this.hand, [selected]: this.hand[selected].setUnavailable() }, O.none)
+        )(this.selectedPiece)
     }
 
     static defaultHand: PiecesR =
         {
-            '1x2': { name: '1x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1)] },
-            '1x3': { name: '1x3', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2)] },
-            '1x4': { name: '1x4', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 0, 3)] },
-            '2x2': { name: '2x2', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 0), new Vector3(0, 1, 1)] },
-            'Z': { name: 'Z', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 1, 2)] },
-            'T': { name: 'T', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(0, 0, 2)] },
-            'L': { name: 'L', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 0, 2), new Vector3(0, 1, 2)] },
-            'shortL': { name: 'shortL', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1)] },
-            'rightScrew': { name: 'rightScrew', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(1, 1, 1)] },
-            'leftScrew': { name: 'leftScrew', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(-1, 1, 1)] },
-            'otherOne': { name: 'otherOne', status: 'available', cubes: [new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(0, 1, 1), new Vector3(1, 0, 1)] }
+            '1x2': new Piece([[0, 0, 0], [0, 0, 1]], true),
+            '1x3': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2]], true),
+            '1x4': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3]], true),
+            '2x2': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]], true),
+            'Z': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2]], true),
+            'T': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2]], true),
+            'L': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 2]], true),
+            'shortL': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1]], true),
+            'rightScrew': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 1, 1]], true),
+            'leftScrew': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [-1, 1, 1]], true),
+            'otherOne': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 1]], true)
         }
+
+    static new(): PlayerHand {
+        return new PlayerHand(PlayerHand.defaultHand, O.none)
+    }
 }

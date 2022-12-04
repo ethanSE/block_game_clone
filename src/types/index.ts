@@ -1,4 +1,4 @@
-import { Vector3 } from "three";
+import { Vector3 } from "@react-three/fiber";
 import { Piece, PieceName } from "../classes/Piece";
 import { PlayerHand } from "../classes/PlayerHand";
 

@@ -1,8 +1,7 @@
 import { useReducer } from 'react';
 import { Coord, PlayerID } from '../types';
 import { GameState } from '../classes/GameState';
-import { PieceName } from '../classes/Piece';
-import { RotationAxis } from '../classes/SelectedPiece';
+import { PieceName, RotationAxis } from '../classes/Piece';
 
 export type GameStateAction =
     {
@@ -15,7 +14,7 @@ export type GameStateAction =
     } | {
         type: 'selectPiece',
         player: PlayerID,
-        piece: PieceName
+        pieceName: PieceName
     } | {
         type: 'rotateSelectedPiece'
         axis: RotationAxis
@@ -30,7 +29,7 @@ export function useGameState(): GSReducerType {
     function reducer(state: GameState, action: GameStateAction): GameState {
         switch (action.type) {
             case 'selectPiece':
-                return state.selectPiece(action.player, action.piece)
+                return state.selectPiece(action.player, action.pieceName)
             case 'add':
                 return state.playSelectedPiece(action.position)
             case 'reset':

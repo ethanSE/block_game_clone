@@ -1,16 +1,45 @@
 import { PlayerHand } from '../classes/PlayerHand';
 import * as O from 'fp-ts/lib/Option'
 
-test('piece selection', () => {
-    const hand = new PlayerHand();
-    expect(hand.getSelectedPieceName()).toBe(O.none)
+test('piece is selected', () => {
+    const testPieceName = 'L'
+    const hand = PlayerHand.new();
+    const afterSelection = hand.setSelectedPiece(testPieceName);
 
-    const selected = hand.setSelectedPiece('1x2');
-    expect(selected.getSelectedPieceName()).toStrictEqual(O.some({ name: '1x2', status: 'selected' }))
+    expect(afterSelection.getSelectedPieceName()).toStrictEqual(O.some(testPieceName))
+})
 
-    const selected2 = selected.setSelectedPiece('otherOne');
-    expect(selected2.getSelectedPieceName()).toStrictEqual(O.some({ name: 'otherOne', status: 'selected' }))
+test('piece is selected and cleared', () => {
+    const testPieceName = 'L'
+    const hand = PlayerHand.new();
+    const afterSelection = hand.setSelectedPiece(testPieceName);
 
-    const cleared = selected2.clearSelectedPiece();
-    expect(cleared.getSelectedPieceName()).toBe(O.none)
-});
+    expect(afterSelection.getSelectedPieceName()).toStrictEqual(O.some(testPieceName))
+
+    const afterClearPiece = afterSelection.clearSelectedPiece().getSelectedPieceName()
+    expect(afterClearPiece).toStrictEqual(O.none)
+})
+
+test('piece is cleared on play', () => {
+    const testPieceName = 'L'
+    const hand = PlayerHand.new();
+    const afterSelection = hand.setSelectedPiece(testPieceName);
+
+    const selectedPiece = afterSelection.getSelectedPieceName();
+    expect(selectedPiece).toStrictEqual(O.some(testPieceName))
+
+    const selectedPieceAfterPlay = afterSelection.playSelectedPiece().getSelectedPieceName()
+    expect(selectedPieceAfterPlay).toStrictEqual(O.none)
+})
+
+test('cannot re-select piece after it is played', () => {
+    const testPieceName = 'L'
+    const hand = PlayerHand.new();
+
+    const afterPlayAndReselect =
+        hand.setSelectedPiece(testPieceName)
+            .playSelectedPiece()
+            .setSelectedPiece(testPieceName)
+
+    expect(afterPlayAndReselect.getSelectedPieceName()).toStrictEqual(O.none)
+})

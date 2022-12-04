@@ -13,10 +13,35 @@ export type PieceName =
     | 'leftScrew'
     | 'otherOne'
 
-export type Piece = {
-    name: PieceName,
-    status: Status,
-    readonly cubes: Coord[]
-}
+export type RotationAxis = 'X' | 'Y';
 
-export type Status = 'available' | 'selected' | 'unavailable';
+export class Piece {
+    constructor(coords: Coord[], available: boolean) {
+        this.coords = coords
+        this.available = available
+    }
+
+    private readonly coords: Coord[]
+    readonly available: boolean
+
+    //method to rotate
+    //applies rotation via quaternion
+    //does rounding
+    rotate(rotation: RotationAxis): Piece {
+        //TODO: Implement
+        return new Piece(this.coords, this.available)
+    }
+
+    getCoords(): Coord[] {
+        return this.coords
+    }
+
+    isAvailable(): boolean {
+        console.log('in fn')
+        return this.available
+    }
+
+    setUnavailable() {
+        return new Piece(this.coords, false)
+    }
+}

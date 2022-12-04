@@ -1,13 +1,13 @@
-import { PlayerID, PlayerHands, Coord } from "../types";
-import { PieceName } from "./Piece";
+import { PlayerID, Coord } from "../types";
+import { PieceName, RotationAxis } from "./Piece";
 import { PlayerHand } from "./PlayerHand";
-import { RotationAxis } from "./SelectedPiece";
 import * as O from 'fp-ts/Option'
 export class PlayerState {
     constructor(
         currentPlayer: PlayerID = 'p1',
-        player1Hand: PlayerHand = new PlayerHand(),
-        player2Hand: PlayerHand = new PlayerHand()) {
+        player1Hand: PlayerHand = PlayerHand.new(),
+        player2Hand: PlayerHand = PlayerHand.new()
+    ) {
         this.currentPlayer = currentPlayer;
         this.p1 = player1Hand;
         this.p2 = player2Hand
@@ -41,7 +41,7 @@ export class PlayerState {
         }
     }
 
-    getSelectedPiece() {
+    getSelectedPieceName() {
         return this.currentPlayer === 'p1' ? this.p1.getSelectedPieceName() : this.p2.getSelectedPieceName()
     }
 
@@ -71,6 +71,4 @@ export class PlayerState {
     getSelectedPieceCoords(): O.Option<Coord[]> {
         return this[this.currentPlayer].getSelectedPieceCoords()
     }
-
-    static initialHandState: PlayerHands = { 'p1': new PlayerHand(), 'p2': new PlayerHand() } as const
 }
