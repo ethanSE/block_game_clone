@@ -43,3 +43,27 @@ test('cannot re-select piece after it is played', () => {
 
     expect(afterPlayAndReselect.getSelectedPieceName()).toStrictEqual(O.none)
 })
+
+test('piece orientation is maintained when switching pieces', () => {
+    // a piece should stay in the same position when selected, unselected, and reselected
+    const hand = PlayerHand.new();
+    const intialSelectionAndRotation = hand.setSelectedPiece('T').rotateSelectedPiece('X')
+    const initialPiecePosition = intialSelectionAndRotation.getSelectedPieceCoords()
+
+    // position should be preserved when deleselecting and reselecting a piece
+    expect(
+        intialSelectionAndRotation
+            .clearSelectedPiece()
+            .setSelectedPiece('T')
+            .getSelectedPieceCoords()
+    ).toStrictEqual(initialPiecePosition)
+
+    //pieces are rotated independently
+    expect(
+        intialSelectionAndRotation
+            .setSelectedPiece('L')
+            .rotateSelectedPiece('Y')
+            .setSelectedPiece('T')
+            .getSelectedPieceCoords()
+    ).toStrictEqual(initialPiecePosition)
+})

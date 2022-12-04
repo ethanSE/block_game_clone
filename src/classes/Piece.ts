@@ -1,3 +1,4 @@
+import { Quaternion, Vector3 } from "three";
 import { Coord } from "../types"
 
 export type PieceName =
@@ -24,12 +25,14 @@ export class Piece {
     private readonly coords: Coord[]
     readonly available: boolean
 
-    //method to rotate
-    //applies rotation via quaternion
-    //does rounding
     rotate(rotation: RotationAxis): Piece {
-        //TODO: Implement
-        return new Piece(this.coords, this.available)
+        const rotationAxisVector = rotation === 'X' ? new Vector3(1, 0, 0) : new Vector3(0, 1, 0)
+        const rotationQuaternion = new Quaternion().setFromAxisAngle(rotationAxisVector, Math.PI / 2)
+
+        const newCoords = this.coords.map((coord) =>
+            coord.clone().applyQuaternion(rotationQuaternion).round())
+
+        return new Piece(newCoords, this.available)
     }
 
     getCoords(): Coord[] {
@@ -37,7 +40,6 @@ export class Piece {
     }
 
     isAvailable(): boolean {
-        console.log('in fn')
         return this.available
     }
 

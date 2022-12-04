@@ -2,6 +2,7 @@ import { toEntries } from 'fp-ts/Record'
 import * as O from 'fp-ts/Option'
 import { Coord, PiecesR } from '../types';
 import { PieceName, RotationAxis, Piece } from './Piece';
+import { Vector3 } from 'three';
 
 export class PlayerHand {
     constructor(
@@ -54,20 +55,23 @@ export class PlayerHand {
             (selected: PieceName) => new PlayerHand({ ...this.hand, [selected]: this.hand[selected].setUnavailable() }, O.none)
         )(this.selectedPiece)
     }
+    static fromArrays(input: [number, number, number][]): Vector3[] {
+        return input.map((coord) => new Vector3(coord[0], coord[1], coord[2]))
+    }
 
     static defaultHand: PiecesR =
         {
-            '1x2': new Piece([[0, 0, 0], [0, 0, 1]], true),
-            '1x3': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2]], true),
-            '1x4': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3]], true),
-            '2x2': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]], true),
-            'Z': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2]], true),
-            'T': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2]], true),
-            'L': new Piece([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 2]], true),
-            'shortL': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1]], true),
-            'rightScrew': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 1, 1]], true),
-            'leftScrew': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [-1, 1, 1]], true),
-            'otherOne': new Piece([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 1]], true)
+            '1x2': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1]]), true),
+            '1x3': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 0, 2]]), true),
+            '1x4': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3]]), true),
+            '2x2': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]]), true),
+            'Z': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2]]), true),
+            'T': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2]]), true),
+            'L': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 2]]), true),
+            'shortL': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1]]), true),
+            'rightScrew': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 1, 1]]), true),
+            'leftScrew': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1], [-1, 1, 1]]), true),
+            'otherOne': new Piece(PlayerHand.fromArrays([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 1]]), true)
         }
 
     static new(): PlayerHand {
