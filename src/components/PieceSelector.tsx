@@ -1,5 +1,7 @@
 import { useContext } from "react";
 
+import * as O from 'fp-ts/Option'
+
 //State/Context
 import GameStateContext from "../context/GameStateContext";
 import { GSReducerType } from "../hooks/useGameState";
@@ -7,30 +9,50 @@ import { GSReducerType } from "../hooks/useGameState";
 //styles
 import css from '../styles/PieceSelector.module.css'
 import { PlayerID } from "../types";
-import { Piece } from "../types/Piece";
+import { PieceName } from "../classes/Piece";
 
 export default function PieceSelectorContainer() {
+    const [_, dispatch]: GSReducerType = useContext(GameStateContext)
+
     return (
         <div className={css.pieceSelectorContainer}>
-            <PieceSelector playerID='p1' />
-            <PieceSelector playerID='p2' />
+            <PieceSelector
+                playerID='p1'
+            />
+            <PassTurnButton onClick={() => dispatch({ type: "passTurn" })} />
+            <PieceSelector
+                playerID='p2'
+            />
         </div>
     );
 }
 
+function PassTurnButton(props: { onClick: () => void }) {
+    return (
+        <button
+            onClick={props.onClick}
+            className={css.passButton}
+        >
+            Pass Turn
+        </button>
+    )
+}
+
 function PieceSelector(props: { playerID: PlayerID }) {
     const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
+    const isCurrentPlayer = gameState.getCurrentPlayer() === props.playerID
     const pieces = gameState.getPlayerPieces(props.playerID)
+    const selectedPieceName = O.getOrElse(() => '')(gameState.getSelectedPieceName());
 
     return (
-        <div className={css[props.playerID]}>
+        <div className={isCurrentPlayer ? css[`${props.playerID}Active`] : css[props.playerID]}>
             {
-                pieces.map((piece) =>
+                pieces.map(([pieceName, piece]) =>
                     <PieceSelectorItem
-                        key={`${piece.name}${props.playerID}`}
-                        piece={piece}
-                        playerID={props.playerID}
-                        setSelected={() => dispatch({ type: 'selectPiece', player: props.playerID, piece: piece.name })}
+                        key={`${pieceName}${props.playerID}`}
+                        pieceName={pieceName}
+                        status={isCurrentPlayer && pieceName === selectedPieceName ? 'selected' : piece.isAvailable() ? 'available' : 'unavailable'}
+                        setSelected={() => dispatch({ type: 'selectPiece', player: props.playerID, pieceName: pieceName })}
                     />
                 )
             }
@@ -40,14 +62,14 @@ function PieceSelector(props: { playerID: PlayerID }) {
 
 function PieceSelectorItem(props: PieceSelectorItemProps) {
     return (
-        <div className={css[props.piece.status]} onClick={props.setSelected}>
-            <p>{props.piece.name}</p>
+        <div className={css[props.status]} onClick={props.setSelected}>
+            <p>{props.pieceName}</p>
         </div>
     )
 }
 
 type PieceSelectorItemProps = {
-    piece: Piece,
-    playerID: PlayerID,
+    pieceName: PieceName,
+    status: 'available' | 'unavailable' | 'selected',
     setSelected: () => void
 }

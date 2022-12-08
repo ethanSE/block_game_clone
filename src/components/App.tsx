@@ -1,39 +1,33 @@
-import { Canvas } from '@react-three/fiber'
-
+import { useRef } from 'react';
 //state/context
 import GameStateContext from '../context/GameStateContext';
 import { useGameState } from '../hooks/useGameState';
 
 //components
-import Board from './Board'
-import CustomCamera from './CustomCamera'
-import InPlayCubes from './InPlayPieces'
-import ActivePlayer from './ActivePlayer';
 import PieceSelectorContainer from './PieceSelector';
+import GameCanvas from './GameCanvas';
 
 //styles
 import '../styles/App.css';
 
 function App() {
-    //hold game state here
     const gameState = useGameState()
+    const containerDivRef = useRef(null!)
+    const gameAreaDivRef = useRef(null!)
+    const pieceRotateDivRef = useRef(null!)
 
     return (
-        <div className='website'>
-            <GameStateContext.Provider value={gameState}>
-                <Canvas>
-                    <CustomCamera />
-                    <ambientLight intensity={0.5} />
-                    <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
-                    <pointLight position={[-10, -10, -10]} />
-                    <InPlayCubes />
-                    <Board />
-                </Canvas>
-                <ActivePlayer />
+        <GameStateContext.Provider value={gameState}>
+            <div ref={containerDivRef} className='website'>
+                <div ref={pieceRotateDivRef} style={{ width: '100vw', height: '50%' }} />
+                <div ref={gameAreaDivRef} style={{ position: 'relative', width: '100vw', height: '50%' }} />
+                <GameCanvas gameAreaDivRef={gameAreaDivRef} pieceRotateDivRef={pieceRotateDivRef} />
                 <PieceSelectorContainer />
-            </GameStateContext.Provider>
-        </div>
+            </div>
+        </GameStateContext.Provider >
     );
 }
+
+
 
 export default App;

@@ -18,6 +18,7 @@ function ActivePlayer() {
             <button
                 onClick={() => dispatch({ type: "passTurn" })}
                 className={css.passButton}
+                style={{ borderRadius: '5px', backgroundColor: 'teal', padding: '5px' }}
             >Pass Turn</button>
         </div>
     );

@@ -1,11 +1,13 @@
-import { PlayerID, PlayerHands } from ".";
-import { PieceName } from "./Piece";
+import { PlayerID, Coord } from "../types";
+import { PieceName, RotationAxis } from "./Piece";
 import { PlayerHand } from "./PlayerHand";
+import * as O from 'fp-ts/Option'
 export class PlayerState {
     constructor(
         currentPlayer: PlayerID = 'p1',
-        player1Hand: PlayerHand = new PlayerHand(),
-        player2Hand: PlayerHand = new PlayerHand()) {
+        player1Hand: PlayerHand = PlayerHand.new(),
+        player2Hand: PlayerHand = PlayerHand.new()
+    ) {
         this.currentPlayer = currentPlayer;
         this.p1 = player1Hand;
         this.p2 = player2Hand
@@ -19,7 +21,7 @@ export class PlayerState {
         return this.currentPlayer;
     }
 
-    getOtherPlayer(): PlayerID {
+    private getOtherPlayer(): PlayerID {
         return this.currentPlayer === 'p1' ? 'p2' : 'p1'
     }
 
@@ -28,19 +30,27 @@ export class PlayerState {
     }
 
     getPlayerHand(id: PlayerID) {
-        return id === 'p1' ? this.p1.getHand() : this.p2.getHand();
+        return id === 'p1' ? this.p1.getHandList() : this.p2.getHandList();
     }
 
     selectPiece(piece: PieceName): PlayerState {
         if (this.currentPlayer === 'p1') {
-            return new PlayerState(this.currentPlayer, this.p1.setSelectedPiece(piece), new PlayerHand(this.p2.hand));
+            return new PlayerState(this.currentPlayer, this.p1.setSelectedPiece(piece), this.p2);
         } else {
-            return new PlayerState(this.currentPlayer, new PlayerHand(this.p1.hand), this.p2.setSelectedPiece(piece));
+            return new PlayerState(this.currentPlayer, this.p1, this.p2.setSelectedPiece(piece));
         }
     }
 
-    getSelectedPiece() {
-        return this.currentPlayer === 'p1' ? this.p1.getSelectedPiece() : this.p2.getSelectedPiece()
+    getSelectedPieceName() {
+        return this.currentPlayer === 'p1' ? this.p1.getSelectedPieceName() : this.p2.getSelectedPieceName()
+    }
+
+    rotateSelectedPiece(rotation: RotationAxis): PlayerState {
+        if (this.currentPlayer === 'p1') {
+            return new PlayerState(this.currentPlayer, this.p1.rotateSelectedPiece(rotation), this.p2);
+        } else {
+            return new PlayerState(this.currentPlayer, this.p1, this.p2.rotateSelectedPiece(rotation))
+        }
     }
 
     playSelectedPiece(): PlayerState {
@@ -58,5 +68,7 @@ export class PlayerState {
         return new PlayerState(this.getOtherPlayer(), newP1Hand, newP2Hand)
     }
 
-    static initialHandState: PlayerHands = { 'p1': new PlayerHand(), 'p2': new PlayerHand() } as const
+    getSelectedPieceCoords(): O.Option<Coord[]> {
+        return this[this.currentPlayer].getSelectedPieceCoords()
+    }
 }
