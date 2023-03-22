@@ -1,4 +1,4 @@
-import { Quaternion, Vector3 } from "three";
+import { Quaternion, Vector3 } from "three"
 import { Coord } from "../types"
 
 export type PieceName =
@@ -14,10 +14,10 @@ export type PieceName =
     | 'leftScrew'
     | 'otherOne'
 
-export type RotationAxis = 'X' | 'Y';
+export type RotationAxis = 'X' | 'Y'
 
 export class Piece {
-    constructor(coords: Coord[], available: boolean) {
+    constructor(coords: Coord[], available: boolean = true) {
         this.coords = coords
         this.available = available
     }
@@ -43,7 +43,23 @@ export class Piece {
         return this.available
     }
 
-    setUnavailable() {
+    setUnavailable(): Piece {
         return new Piece(this.coords, false)
     }
 }
+
+function vec3FromCoords(input: [number, number, number][]): Vector3[] {
+    return input.map((coords) => new Vector3(...coords))
+}
+
+export const oneByTwo = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1]]))
+export const oneByThree = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 0, 2]]))
+export const oneByFour = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 0, 3]]))
+export const twoByTwo = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1]]))
+export const Z = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2]]))
+export const T = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 2]]))
+export const L = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 0, 2], [0, 1, 2]]))
+export const shortL = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1]]))
+export const rightScrew = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 1, 1]]))
+export const leftScrew = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1], [-1, 1, 1]]))
+export const otherOne = new Piece(vec3FromCoords([[0, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 1]]))

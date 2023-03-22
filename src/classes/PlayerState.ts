@@ -5,8 +5,8 @@ import * as O from 'fp-ts/Option'
 export class PlayerState {
     constructor(
         currentPlayer: PlayerID = 'p1',
-        player1Hand: PlayerHand = PlayerHand.new(),
-        player2Hand: PlayerHand = PlayerHand.new()
+        player1Hand: PlayerHand = new PlayerHand(),
+        player2Hand: PlayerHand = new PlayerHand()
     ) {
         this.currentPlayer = currentPlayer;
         this.p1 = player1Hand;
@@ -30,7 +30,7 @@ export class PlayerState {
     }
 
     getPlayerHand(id: PlayerID) {
-        return id === 'p1' ? this.p1.getHandList() : this.p2.getHandList();
+        return this[id].getHandList();
     }
 
     selectPiece(piece: PieceName): PlayerState {
@@ -42,7 +42,7 @@ export class PlayerState {
     }
 
     getSelectedPieceName() {
-        return this.currentPlayer === 'p1' ? this.p1.getSelectedPieceName() : this.p2.getSelectedPieceName()
+        return this[this.currentPlayer].getSelectedPieceName()
     }
 
     rotateSelectedPiece(rotation: RotationAxis): PlayerState {
