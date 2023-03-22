@@ -42,29 +42,17 @@ export class GameState {
     playSelectedPiece(position: Coord): GameState {
         const selectedPiece = this.playerState.getSelectedPieceName();
 
-        const calcNewState = () => {
-            const newBoardState = new BoardState(
-                this.boardState.getPlayArea(),
-                this.boardState.getPieces().concat({ position, owner: this.getCurrentPlayer() })
-            )
-
-            const newPlayerState = this.playerState.playSelectedPiece()
-
-            return new GameState(newPlayerState, newBoardState);
-        }
-
         return O.fold(
             () => this,
-            () => calcNewState()
+            (_) => new GameState(
+                this.playerState.playSelectedPiece(),
+                this.boardState.addPiece(position, this.getCurrentPlayer())
+            )
         )(selectedPiece)
     }
 
-    selectPiece(id: PlayerID, piece: PieceName): GameState {
-        if (id === this.playerState.getCurrentPlayer()) {
-            return new GameState(this.playerState.selectPiece(piece), this.boardState);
-        } else {
-            return this
-        }
+    selectPiece(piece: PieceName): GameState {
+        return new GameState(this.playerState.selectPiece(piece), this.boardState);
     }
 
     passTurn(): GameState {

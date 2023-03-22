@@ -52,7 +52,7 @@ function PieceSelector(props: { playerID: PlayerID }) {
                         key={`${pieceName}${props.playerID}`}
                         pieceName={pieceName}
                         status={isCurrentPlayer && pieceName === selectedPieceName ? 'selected' : piece.isAvailable() ? 'available' : 'unavailable'}
-                        setSelected={() => dispatch({ type: 'selectPiece', player: props.playerID, pieceName: pieceName })}
+                        setSelected={() => isCurrentPlayer && dispatch({ type: 'selectPiece', pieceName: pieceName })}
                     />
                 )
             }

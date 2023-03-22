@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { Coord, PlayerID } from '../types';
+import { Coord } from '../types';
 import { GameState } from '../classes/GameState';
 import { PieceName, RotationAxis } from '../classes/Piece';
 
@@ -13,7 +13,6 @@ export type GameStateAction =
         type: 'passTurn'
     } | {
         type: 'selectPiece',
-        player: PlayerID,
         pieceName: PieceName
     } | {
         type: 'rotateSelectedPiece'
@@ -24,12 +23,12 @@ export type GameStateAction =
 export type GSReducerType = [GameState, (a: GameStateAction) => void];
 
 export function useGameState(): GSReducerType {
-    const [inPlay, dispatch] = useReducer(reducer, new GameState())
+    const [gameState, dispatch] = useReducer(reducer, new GameState())
 
     function reducer(state: GameState, action: GameStateAction): GameState {
         switch (action.type) {
             case 'selectPiece':
-                return state.selectPiece(action.player, action.pieceName)
+                return state.selectPiece(action.pieceName)
             case 'add':
                 return state.playSelectedPiece(action.position)
             case 'reset':
@@ -41,5 +40,5 @@ export function useGameState(): GSReducerType {
         }
     }
 
-    return [inPlay, dispatch]
+    return [gameState, dispatch]
 }
