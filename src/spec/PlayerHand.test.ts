@@ -3,7 +3,7 @@ import * as O from 'fp-ts/lib/Option'
 
 test('piece is selected', () => {
     const testPieceName = 'L'
-    const hand = PlayerHand.new();
+    const hand = new PlayerHand();
     const afterSelection = hand.setSelectedPiece(testPieceName);
 
     expect(afterSelection.getSelectedPieceName()).toStrictEqual(O.some(testPieceName))
@@ -11,7 +11,7 @@ test('piece is selected', () => {
 
 test('piece is selected and cleared', () => {
     const testPieceName = 'L'
-    const hand = PlayerHand.new();
+    const hand = new PlayerHand();
     const afterSelection = hand.setSelectedPiece(testPieceName);
 
     expect(afterSelection.getSelectedPieceName()).toStrictEqual(O.some(testPieceName))
@@ -22,7 +22,7 @@ test('piece is selected and cleared', () => {
 
 test('piece is cleared on play', () => {
     const testPieceName = 'L'
-    const hand = PlayerHand.new();
+    const hand = new PlayerHand();
     const afterSelection = hand.setSelectedPiece(testPieceName);
 
     const selectedPiece = afterSelection.getSelectedPieceName();
@@ -34,7 +34,7 @@ test('piece is cleared on play', () => {
 
 test('cannot re-select piece after it is played', () => {
     const testPieceName = 'L'
-    const hand = PlayerHand.new();
+    const hand = new PlayerHand();
 
     const afterPlayAndReselect =
         hand.setSelectedPiece(testPieceName)
@@ -46,7 +46,7 @@ test('cannot re-select piece after it is played', () => {
 
 test('piece orientation is maintained when switching pieces', () => {
     // a piece should stay in the same position when selected, unselected, and reselected
-    const hand = PlayerHand.new();
+    const hand = new PlayerHand();
     const intialSelectionAndRotation = hand.setSelectedPiece('T').rotateSelectedPiece('X')
     const initialPiecePosition = intialSelectionAndRotation.getSelectedPieceCoords()
 
