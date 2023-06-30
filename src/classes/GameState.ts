@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
 import { BoardState } from "./BoardState";
-import { PieceName, RotationAxis } from "./Piece";
+import { Piece, PieceName, RotationAxis } from "./Piece";
 import { PlayerState } from "./PlayerState";
 export class GameState {
     constructor(
@@ -61,5 +61,16 @@ export class GameState {
 
     rotateSelectedPiece(rotation: RotationAxis): GameState {
         return new GameState(this.playerState.rotateSelectedPiece(rotation), this.boardState);
+    }
+
+    previewPiece(position: Coord): GameState {
+        return O.fold(
+            () => this,
+            (piece: Piece) => new GameState(this.playerState, this.boardState.previewPiece(position, piece, this.playerState.getCurrentPlayer()))
+        )(this.playerState.getSelectedPiece())
+    }
+
+    getPreviewPiece(): O.Option<Piece> {
+        return this.boardState.getPreviewedPiece();
     }
 }

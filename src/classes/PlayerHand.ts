@@ -35,6 +35,12 @@ export class PlayerHand {
         return this.selectedPiece
     }
 
+    getSelectedPiece() {
+        return O.map(
+            (selected: PieceName) => this.hand[selected]
+        )(this.selectedPiece)
+    }
+
     setSelectedPiece(pieceName: PieceName): PlayerHand {
         if (this.hand[pieceName].isAvailable()) {
             return new PlayerHand(this.hand, O.of(pieceName))

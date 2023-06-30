@@ -46,6 +46,11 @@ export class Piece {
     setUnavailable(): Piece {
         return new Piece(this.coords, false)
     }
+
+    move(position: Coord): Piece {
+        let newCoords = this.coords.map((c) => c.clone().add(position).round())
+        return new Piece(newCoords, this.available)
+    }
 }
 
 function vec3FromCoords(input: [number, number, number][]): Vector3[] {

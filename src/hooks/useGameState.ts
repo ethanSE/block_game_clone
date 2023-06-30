@@ -17,6 +17,9 @@ export type GameStateAction =
     } | {
         type: 'rotateSelectedPiece'
         axis: RotationAxis
+    } | {
+        type: 'previewPiece'
+        position: Coord
     }
 
 //necessary to provide type hint to tsc
@@ -37,6 +40,8 @@ export function useGameState(): GSReducerType {
                 return state.passTurn();
             case 'rotateSelectedPiece':
                 return state.rotateSelectedPiece(action.axis)
+            case 'previewPiece':
+                return state.previewPiece(action.position)
         }
     }
 

@@ -41,6 +41,10 @@ export class PlayerState {
         }
     }
 
+    getSelectedPiece() {
+        return this[this.currentPlayer].getSelectedPiece()
+    }
+
     getSelectedPieceName() {
         return this[this.currentPlayer].getSelectedPieceName()
     }

@@ -12,6 +12,10 @@ export function BoardSquare(props: { position: [number, number] }) {
             onPointerOver={(event) => {
                 event.stopPropagation();
                 setHovered(true);
+                dispatch({
+                    type: 'previewPiece',
+                    position: new Vector3(props.position[0], 0, props.position[1])
+                })
             }}
             onPointerOut={(_) => setHovered(false)}
             onClick={(event) => {

@@ -1,14 +1,17 @@
 import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
-import * as E from 'fp-ts/lib/Either'
+import * as O from 'fp-ts/lib/Option'
+import { Piece } from "./Piece";
 
 export class BoardState {
-    constructor(playArea = defaultBoard, pieces: InPlayPiece[] = []) {
+    constructor(playArea = defaultBoard, pieces: InPlayPiece[] = [], previewedPiece: O.Option<Piece> = O.none) {
         this.playArea = playArea;
         this.piecesInPlay = pieces;
+        this.previewedPiece = previewedPiece
     };
 
     private readonly playArea: BaseTile[];
     private readonly piecesInPlay: InPlayPiece[];
+    private readonly previewedPiece: O.Option<Piece>;
 
     getPlayArea(): BaseTile[] {
         return [...this.playArea]
@@ -16,6 +19,15 @@ export class BoardState {
 
     getPieces(): InPlayPiece[] {
         return this.piecesInPlay;
+    }
+
+    getPreviewedPiece(): O.Option<Piece> {
+        return this.previewedPiece;
+    }
+
+    previewPiece(position: Coord, selectedPiece: Piece, currentPlayer: PlayerID): BoardState {
+        let translated = selectedPiece.move(position);
+        return new BoardState(this.playArea, this.piecesInPlay, O.of(translated))
     }
 
     addPiece(position: Coord, currentPlayer: PlayerID): BoardState {

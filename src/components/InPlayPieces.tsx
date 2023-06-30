@@ -10,7 +10,7 @@ import Piece from "./Piece";
 export default function InPlayPieces() {
     const [gameState]: GSReducerType = useContext(GameStateContext)
     return (
-        <group>
+        <>
             {gameState.getPieces().map(
                 (piece) =>
                     <Piece
@@ -19,6 +19,6 @@ export default function InPlayPieces() {
                         owner={piece.owner}
                     />
             )}
-        </group>
+        </>
     );
 }
