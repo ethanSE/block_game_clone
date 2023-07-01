@@ -57,6 +57,14 @@ export class PlayerState {
         }
     }
 
+    setSelectedPieceOrigin(newOrigin: Coord): PlayerState {
+        if (this.currentPlayer === 'p1') {
+            return new PlayerState(this.currentPlayer, this.p1.setSelectedPieceOrigin(newOrigin), this.p2);
+        } else {
+            return new PlayerState(this.currentPlayer, this.p1, this.p2.setSelectedPieceOrigin(newOrigin))
+        }
+    }
+
     playSelectedPiece(): PlayerState {
         let newP1Hand;
         let newP2Hand;

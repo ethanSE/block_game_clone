@@ -21,6 +21,13 @@ export class PlayerHand {
         )(this.selectedPiece)
     }
 
+    setSelectedPieceOrigin(newOrigin: Coord): PlayerHand {
+        return O.fold(
+            () => this,
+            (selected: PieceName) => new PlayerHand({ ...this.hand, [selected]: this.hand[selected].setOrigin(newOrigin) }, O.of(selected))
+        )(this.selectedPiece)
+    }
+
     getSelectedPieceCoords(): O.Option<Coord[]> {
         return O.map(
             (selected: PieceName) => this.hand[selected].getCoords()

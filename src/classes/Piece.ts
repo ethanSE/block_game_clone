@@ -51,6 +51,11 @@ export class Piece {
         let newCoords = this.coords.map((c) => c.clone().add(position).round())
         return new Piece(newCoords, this.available)
     }
+
+    setOrigin(newOrigin: Coord): Piece {
+        let newCoords = this.coords.map(c => c.clone().sub(newOrigin).round())
+        return new Piece(newCoords, this.available)
+    }
 }
 
 function vec3FromCoords(input: [number, number, number][]): Vector3[] {

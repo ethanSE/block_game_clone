@@ -1,6 +1,7 @@
 import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
 import * as O from 'fp-ts/lib/Option'
 import { Piece } from "./Piece";
+import { MovePreview, PreviewCube, Validity } from "./MovePreview";
 
 export class BoardState {
     constructor(playArea = defaultBoard, pieces: InPlayPiece[] = [], previewedPiece: O.Option<Piece> = O.none) {
@@ -21,21 +22,26 @@ export class BoardState {
         return this.piecesInPlay;
     }
 
-    getPreviewedPiece(): O.Option<Piece> {
-        return this.previewedPiece;
+    validatePlacement(currentPlayer: PlayerID, piece: Piece, position: Coord): MovePreview {
+        function alwaysValid(coord: Coord): PreviewCube {
+            return { 'validity': Validity.Valid, coords: coord }
+        }
+
+        function translate(c: Coord): Coord {
+            return c.clone().add(position).round()
+        }
+        //TODO! Implement validation logic
+        return { 'cubes': piece.getCoords().map(translate).map(alwaysValid), 'isValid': true }
     }
 
-    previewPiece(position: Coord, selectedPiece: Piece, currentPlayer: PlayerID): BoardState {
-        let translated = selectedPiece.move(position);
-        return new BoardState(this.playArea, this.piecesInPlay, O.of(translated))
-    }
-
-    addPiece(position: Coord, currentPlayer: PlayerID): BoardState {
+    addPieces(positions: Coord[], currentPlayer: PlayerID): BoardState {
         //will perform validation logic
         //or delegate this work to other method
         //combine with move preview logic?
 
-        return new BoardState(this.playArea, [...this.piecesInPlay, { position: position, owner: currentPlayer }])
+        let withOwner = positions.map(p => ({ position: p, owner: currentPlayer }))
+
+        return new BoardState(this.playArea, [...this.piecesInPlay, ...withOwner])
     }
 }
 

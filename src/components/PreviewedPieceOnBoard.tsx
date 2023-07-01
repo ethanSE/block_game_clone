@@ -6,21 +6,20 @@ import { Coord, PlayerID } from "../types"
 
 export function PreviewedPieceOnBoard() {
     const [gameState, _]: GSReducerType = useContext(GameStateContext)
-    const previewed = O.toNullable(gameState.getPreviewPiece())
+    const previewed = O.toNullable(gameState.getPreviewState())
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
         <group>
             {
-                previewed?.getCoords().map((p) => <PreviewCube
+                previewed?.cubes.map((p) => <PreviewCube
                     key={JSON.stringify(p)}
-                    position={p}
+                    position={p.coords}
                     owner={currentPlayer}
                 />)
             }
         </group>
     )
-
 }
 
 function PreviewCube(props: { position: Coord, owner: PlayerID }) {
