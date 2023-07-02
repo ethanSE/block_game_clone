@@ -1,5 +1,4 @@
 import { Quaternion, Vector3 } from "three"
-import { Coord } from "../types"
 
 export type PieceName =
     '1x2'
@@ -17,25 +16,24 @@ export type PieceName =
 export type RotationAxis = 'X' | 'Y'
 
 export class Piece {
-    constructor(coords: Coord[], available: boolean = true) {
+    constructor(coords: Vector3[], available: boolean = true) {
         this.coords = coords
         this.available = available
     }
 
-    private readonly coords: Coord[]
+    private readonly coords: Vector3[]
     readonly available: boolean
 
     rotate(rotation: RotationAxis): Piece {
         const rotationAxisVector = rotation === 'X' ? new Vector3(1, 0, 0) : new Vector3(0, 1, 0)
         const rotationQuaternion = new Quaternion().setFromAxisAngle(rotationAxisVector, Math.PI / 2)
 
-        const newCoords = this.coords.map((coord) =>
-            coord.clone().applyQuaternion(rotationQuaternion).round())
+        const newCoords = this.coords.map((coord) => coord.clone().applyQuaternion(rotationQuaternion).round())
 
         return new Piece(newCoords, this.available)
     }
 
-    getCoords(): Coord[] {
+    getCoords(): Vector3[] {
         return this.coords
     }
 
@@ -47,13 +45,13 @@ export class Piece {
         return new Piece(this.coords, false)
     }
 
-    move(position: Coord): Piece {
-        let newCoords = this.coords.map((c) => c.clone().add(position).round())
+    move(position: Vector3): Piece {
+        const newCoords = this.coords.map((c) => c.clone().add(position).round())
         return new Piece(newCoords, this.available)
     }
 
-    setOrigin(newOrigin: Coord): Piece {
-        let newCoords = this.coords.map(c => c.clone().sub(newOrigin).round())
+    setOrigin(newOrigin: Vector3): Piece {
+        const newCoords = this.coords.map(c => c.clone().sub(newOrigin).round())
         return new Piece(newCoords, this.available)
     }
 }

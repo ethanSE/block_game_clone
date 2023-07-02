@@ -1,14 +1,14 @@
 import { useReducer } from 'react';
-import { Coord } from '../types';
 import { GameState } from '../classes/GameState';
 import { PieceName, RotationAxis } from '../classes/Piece';
+import { Vector3 } from 'three';
 
 export type GameStateAction =
     {
         type: 'reset'
     } | {
         type: 'add',
-        position: Coord
+        position: Vector3
     } | {
         type: 'passTurn'
     } | {
@@ -19,10 +19,10 @@ export type GameStateAction =
         axis: RotationAxis
     } | {
         type: 'previewPiece'
-        position: Coord
+        position: Vector3
     } | {
         type: 'setSelectedPieceOrigin'
-        newOrigin: Coord
+        newOrigin: Vector3
     }
 
 //necessary to provide type hint to tsc

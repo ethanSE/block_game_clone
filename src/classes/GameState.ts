@@ -1,9 +1,10 @@
 import * as O from "fp-ts/lib/Option";
-import { BaseTile, Coord, InPlayPiece, PlayerID } from "../types";
+import * as E from "fp-ts/Either"
+import { BaseTile, MovePreview, OwnedCube, PlayerID, PreviewCube } from "../types";
 import { BoardState } from "./BoardState";
 import { Piece, PieceName, RotationAxis } from "./Piece";
 import { PlayerState } from "./PlayerState";
-import { MovePreview } from "./MovePreview";
+import { Vector3 } from "three";
 
 export class GameState {
     constructor(
@@ -24,8 +25,8 @@ export class GameState {
         return this.boardState.getPlayArea();
     }
 
-    getPieces(): InPlayPiece[] {
-        return this.boardState.getPieces()
+    getInPlayCubes(): OwnedCube[] {
+        return this.boardState.getInPlayCubes()
     }
 
     getCurrentPlayer(): PlayerID {
@@ -47,16 +48,14 @@ export class GameState {
     playPreviewedPiece(): GameState {
         return O.fold(
             () => this,
-            (preview: MovePreview) => {
-                if (preview.isValid) {
-                    return new GameState(
+            (preview: MovePreview) =>
+                E.fold(
+                    () => this,
+                    (newCubes: readonly OwnedCube[]) => new GameState(
                         this.playerState.playSelectedPiece(),
-                        this.boardState.addPieces(preview.cubes.map(pc => pc.coords), this.getCurrentPlayer())
+                        this.boardState.addPieces(newCubes)
                     )
-                } else {
-                    return this
-                }
-            }
+                )(preview)
         )(this.previewState)
     }
 
@@ -72,18 +71,21 @@ export class GameState {
         return new GameState(this.playerState.rotateSelectedPiece(rotation), this.boardState);
     }
 
-    setSelectedPieceOrigin(newOrigin: Coord): GameState {
+    setSelectedPieceOrigin(newOrigin: Vector3): GameState {
         return new GameState(this.playerState.setSelectedPieceOrigin(newOrigin), this.boardState)
     }
 
-    previewPiece(position: Coord): GameState {
+    previewPiece(position: Vector3): GameState {
         return O.fold(
             () => this,
-            (piece: Piece) => new GameState(this.playerState, this.boardState, O.some(this.boardState.validatePlacement(this.getCurrentPlayer(), piece, position)))
+            (piece: Piece) => new GameState(this.playerState, this.boardState, O.some(this.boardState.previewMove(this.getCurrentPlayer(), piece, position)))
         )(this.playerState.getSelectedPiece())
     }
 
-    getPreviewState(): O.Option<MovePreview> {
-        return this.previewState
+    getPreviewCubes(): PreviewCube[] {
+        return O.fold(
+            () => [],
+            (preview: MovePreview): PreviewCube[] => E.fold((a: PreviewCube[]) => a, (a: readonly OwnedCube[]): PreviewCube[] => a.map((c => ({ ...c, error: O.none }))))(preview)
+        )(this.previewState)
     }
 }

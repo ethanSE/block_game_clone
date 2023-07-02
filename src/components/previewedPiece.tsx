@@ -6,13 +6,13 @@ import GameStateContext from "../context/GameStateContext";
 import { GSReducerType } from "../hooks/useGameState";
 
 //Components
-import { Coord, PlayerID } from "../types";
+import { PlayerID } from "../types";
 import { Center } from "@react-three/drei";
 import { Vector3 } from "three";
 
 export default function PreviewedPiece() {
     const [gameState, _]: GSReducerType = useContext(GameStateContext)
-    const coords = O.getOrElse(() => [] as Coord[])(gameState.getSelectedPieceCoords())
+    const coords = O.getOrElse(() => [] as Vector3[])(gameState.getSelectedPieceCoords())
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
@@ -28,7 +28,7 @@ export default function PreviewedPiece() {
     );
 }
 
-function PreviewCube(props: { position: Coord, owner: PlayerID }) {
+function PreviewCube(props: { position: Vector3, owner: PlayerID }) {
     const [_, dispatch] = useContext(GameStateContext)
     const color = props.position.equals(new Vector3(0, 0, 0)) ? "#004500" : props.owner === 'p1' ? "#000080" : "#008000"
 

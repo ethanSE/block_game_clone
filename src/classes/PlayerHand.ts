@@ -1,7 +1,8 @@
 import { toEntries } from 'fp-ts/Record'
 import * as O from 'fp-ts/Option'
-import { Coord, PiecesR } from '../types';
+import { PiecesR } from '../types';
 import { PieceName, RotationAxis, oneByTwo, oneByThree, oneByFour, twoByTwo, Z, T, shortL, L, leftScrew, otherOne, rightScrew } from './Piece';
+import { Vector3 } from 'three';
 export class PlayerHand {
     constructor(
         hand: PiecesR = PlayerHand.defaultHand,
@@ -21,14 +22,14 @@ export class PlayerHand {
         )(this.selectedPiece)
     }
 
-    setSelectedPieceOrigin(newOrigin: Coord): PlayerHand {
+    setSelectedPieceOrigin(newOrigin: Vector3): PlayerHand {
         return O.fold(
             () => this,
             (selected: PieceName) => new PlayerHand({ ...this.hand, [selected]: this.hand[selected].setOrigin(newOrigin) }, O.of(selected))
         )(this.selectedPiece)
     }
 
-    getSelectedPieceCoords(): O.Option<Coord[]> {
+    getSelectedPieceCoords(): O.Option<Vector3[]> {
         return O.map(
             (selected: PieceName) => this.hand[selected].getCoords()
         )(this.selectedPiece)
