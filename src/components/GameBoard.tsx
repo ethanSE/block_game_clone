@@ -15,11 +15,14 @@ const defaultBoardCenterCameraOffset: Vector3 = new Vector3(-2, 0, -1.5);
 
 export default function GameBoard() {
     return (
-        <group position={defaultBoardCenterCameraOffset}>
-            <InPlayPieces />
-            <BaseTiles />
-            <PreviewedPieceOnBoard />
-        </group>
+        <>
+            <group position={defaultBoardCenterCameraOffset}>
+                <InPlayPieces />
+                <BaseTiles />
+                <PreviewedPieceOnBoard />
+            </group>
+            <ContactShadows position={[0, -1, 0]} opacity={0.75} scale={10} blur={2.5} far={4} />
+        </>
     )
 }
 
@@ -33,7 +36,6 @@ function BaseTiles() {
                 baseTiles.map((item, index) =>
                     <BoardSquare position={item.position} key={index.toString()} />)
             }
-            <ContactShadows opacity={0.75} scale={10} blur={2.5} far={4} />
         </>
     )
 }
