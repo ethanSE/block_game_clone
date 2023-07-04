@@ -1,4 +1,5 @@
-import { PlayerID, Coord } from "../types";
+import { Vector3 } from "three";
+import { PlayerID } from "../types";
 import { PieceName, RotationAxis } from "./Piece";
 import { PlayerHand } from "./PlayerHand";
 import * as O from 'fp-ts/Option'
@@ -41,6 +42,10 @@ export class PlayerState {
         }
     }
 
+    getSelectedPiece() {
+        return this[this.currentPlayer].getSelectedPiece()
+    }
+
     getSelectedPieceName() {
         return this[this.currentPlayer].getSelectedPieceName()
     }
@@ -50,6 +55,14 @@ export class PlayerState {
             return new PlayerState(this.currentPlayer, this.p1.rotateSelectedPiece(rotation), this.p2);
         } else {
             return new PlayerState(this.currentPlayer, this.p1, this.p2.rotateSelectedPiece(rotation))
+        }
+    }
+
+    setSelectedPieceOrigin(newOrigin: Vector3): PlayerState {
+        if (this.currentPlayer === 'p1') {
+            return new PlayerState(this.currentPlayer, this.p1.setSelectedPieceOrigin(newOrigin), this.p2);
+        } else {
+            return new PlayerState(this.currentPlayer, this.p1, this.p2.setSelectedPieceOrigin(newOrigin))
         }
     }
 
@@ -68,7 +81,7 @@ export class PlayerState {
         return new PlayerState(this.getOtherPlayer(), newP1Hand, newP2Hand)
     }
 
-    getSelectedPieceCoords(): O.Option<Coord[]> {
+    getSelectedPieceCoords(): O.Option<Vector3[]> {
         return this[this.currentPlayer].getSelectedPieceCoords()
     }
 }
