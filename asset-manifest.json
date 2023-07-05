@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/block_game_clone/static/css/main.94f7d693.css",
+    "main.js": "/block_game_clone/static/js/main.022e13d2.js",
+    "index.html": "/block_game_clone/index.html",
+    "main.94f7d693.css.map": "/block_game_clone/static/css/main.94f7d693.css.map",
+    "main.022e13d2.js.map": "/block_game_clone/static/js/main.022e13d2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94f7d693.css",
+    "static/js/main.022e13d2.js"
+  ]
+}
