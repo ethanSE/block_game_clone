@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { GSReducerType } from "../hooks/useGameState"
 import GameStateContext from "../context/GameStateContext"
 import * as O from "fp-ts/Option"
-import { PlayerID, PreviewCubeError } from "../types"
+import { PlayerID, PreviewCubeError, p1Color, p2Color } from "../types"
 import { Vector3 } from "three"
 
 export function PreviewedPieceOnBoard() {
@@ -11,7 +11,9 @@ export function PreviewedPieceOnBoard() {
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
-        <group>
+        <group
+            castShadow={false}
+            receiveShadow={false}>
             {
                 previewed.map((p) => <PreviewCube
                     key={JSON.stringify(p)}
@@ -25,9 +27,10 @@ export function PreviewedPieceOnBoard() {
 }
 
 function PreviewCube(props: { position: Vector3, owner: PlayerID, error: O.Option<PreviewCubeError> }) {
-    const color = O.isNone(props.error) ? props.owner === 'p1' ? "#000080" : "#008000" : "red"
+    const color = O.isNone(props.error) ? props.owner === 'p1' ? p1Color : p2Color : "red"
     return (
         <mesh
+            castShadow={false}
             position={props.position}
         >
             <boxGeometry args={[1, 1, 1]} />
