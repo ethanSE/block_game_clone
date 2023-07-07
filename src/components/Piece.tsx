@@ -8,6 +8,7 @@ export default function Piece(props: { position: Vector3, owner: PlayerID }) {
     const [_, dispatch] = useContext(GameStateContext)
     return (
         <RoundedBox args={[0.99, 0.99, 0.99]}
+            castShadow={false}
             radius={0.05}
             smoothness={4}
             position={props.position}

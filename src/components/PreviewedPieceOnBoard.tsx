@@ -11,7 +11,9 @@ export function PreviewedPieceOnBoard() {
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
-        <group>
+        <group
+            castShadow={false}
+            receiveShadow={false}>
             {
                 previewed.map((p) => <PreviewCube
                     key={JSON.stringify(p)}
@@ -28,6 +30,7 @@ function PreviewCube(props: { position: Vector3, owner: PlayerID, error: O.Optio
     const color = O.isNone(props.error) ? props.owner === 'p1' ? p1Color : p2Color : "red"
     return (
         <mesh
+            castShadow={false}
             position={props.position}
         >
             <boxGeometry args={[1, 1, 1]} />

@@ -7,6 +7,8 @@ export function BoardSquare(props: { position: [number, number] }) {
     const [_, dispatch] = useContext(GameStateContext);
     return (
         <mesh
+            receiveShadow={false}
+            castShadow={false}
             position={[props.position[0], -.6, props.position[1]]}
             onPointerOver={(event) => {
                 event.stopPropagation();

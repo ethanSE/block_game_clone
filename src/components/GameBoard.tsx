@@ -21,7 +21,7 @@ export default function GameBoard() {
                 <BaseTiles />
                 <PreviewedPieceOnBoard />
             </group>
-            <ContactShadows position={[0, -1, 0]} opacity={0.75} scale={10} blur={2.5} far={4} />
+
         </>
     )
 }
