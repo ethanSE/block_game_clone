@@ -19,3 +19,6 @@ export enum PreviewCubeError {
     OutOfBounds = "OUTOFBOUNDS",
     NotTouchingOwnPiece = "NOTTOUCHINGOWNPIECE"
 }
+
+export const p1Color = "#03adfc"
+export const p2Color = "#008000"

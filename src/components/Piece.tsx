@@ -1,12 +1,15 @@
 import { Vector3 } from "three";
-import { PlayerID } from "../types";
+import { PlayerID, p1Color, p2Color } from "../types";
 import { useContext } from "react";
 import GameStateContext from "../context/GameStateContext";
+import { RoundedBox } from "@react-three/drei";
 
 export default function Piece(props: { position: Vector3, owner: PlayerID }) {
     const [_, dispatch] = useContext(GameStateContext)
     return (
-        <mesh
+        <RoundedBox args={[0.99, 0.99, 0.99]}
+            radius={0.05}
+            smoothness={4}
             position={props.position}
             onPointerOver={(event) => {
                 event.stopPropagation();
@@ -23,8 +26,7 @@ export default function Piece(props: { position: Vector3, owner: PlayerID }) {
                 })
             }}
         >
-            <boxGeometry args={[1, 1, 1]} />
-            <meshPhongMaterial color={props.owner === 'p1' ? "#000080" : "#008000"} />
-        </mesh>
+            <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
+        </RoundedBox>
     );
 }
