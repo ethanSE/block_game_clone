@@ -26,7 +26,7 @@ export function BoardSquare(props: { position: [number, number] }) {
             }}
         >
             <boxGeometry args={[1, .2, 1]} />
-            <meshStandardMaterial color={"grey"} />
+            <meshPhongMaterial color={"grey"} />
         </mesh>
     );
 }

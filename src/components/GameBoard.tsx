@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Center, ContactShadows } from '@react-three/drei';
+import { ContactShadows } from '@react-three/drei';
 
 //State/Context
 import GameStateContext from "../context/GameStateContext";

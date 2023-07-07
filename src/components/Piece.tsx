@@ -24,7 +24,7 @@ export default function Piece(props: { position: Vector3, owner: PlayerID }) {
             }}
         >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={props.owner === 'p1' ? "#000080" : "#008000"} />
+            <meshPhongMaterial color={props.owner === 'p1' ? "#000080" : "#008000"} />
         </mesh>
     );
 }
