@@ -17,7 +17,7 @@ export default React.memo((props: { position: Vector3, owner: PlayerID, addAbove
             onClick={(e) => {
                 e.stopPropagation();
                 props.addAbove();
-            }} matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} getVertexPosition={undefined}        >
+            }}>
             <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
         </RoundedBox>
     );
