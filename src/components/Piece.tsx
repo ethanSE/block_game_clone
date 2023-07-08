@@ -1,11 +1,9 @@
 import { Vector3 } from "three";
 import { PlayerID, p1Color, p2Color } from "../types";
-import { useContext } from "react";
-import GameStateContext from "../context/GameStateContext";
 import { RoundedBox } from "@react-three/drei";
+import React from "react";
 
-export default function Piece(props: { position: Vector3, owner: PlayerID }) {
-    const [_, dispatch] = useContext(GameStateContext)
+export default React.memo((props: { position: Vector3, owner: PlayerID, addAbove: () => void, previewAbove: () => void }) => {
     return (
         <RoundedBox args={[0.99, 0.99, 0.99]}
             castShadow={false}
@@ -14,20 +12,14 @@ export default function Piece(props: { position: Vector3, owner: PlayerID }) {
             position={props.position}
             onPointerOver={(event) => {
                 event.stopPropagation();
-                dispatch({
-                    type: 'previewPiece',
-                    position: props.position.clone().add(new Vector3(0, 1, 0))
-                })
+                props.previewAbove()
             }}
             onClick={(e) => {
                 e.stopPropagation()
-                dispatch({
-                    type: "add",
-                    position: props.position.clone().add(new Vector3(0, 1, 0))
-                })
+                props.addAbove()
             }}
         >
             <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
         </RoundedBox>
     );
-}
+}, (a, b) => true);

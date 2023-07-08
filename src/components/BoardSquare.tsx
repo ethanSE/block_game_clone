@@ -1,10 +1,4 @@
-import { useContext } from 'react'
-import { Vector3 } from 'three';
-//state/context
-import GameStateContext from '../context/GameStateContext';
-
-export function BoardSquare(props: { position: [number, number] }) {
-    const [_, dispatch] = useContext(GameStateContext);
+export function BoardSquare(props: { position: [number, number], preview: () => void, add: () => void }) {
     return (
         <mesh
             receiveShadow={false}
@@ -12,19 +6,11 @@ export function BoardSquare(props: { position: [number, number] }) {
             position={[props.position[0], -.6, props.position[1]]}
             onPointerOver={(event) => {
                 event.stopPropagation();
-                dispatch({
-                    type: 'previewPiece',
-                    position: new Vector3(props.position[0], 0, props.position[1])
-                })
+                props.preview()
             }}
             onClick={(event) => {
                 event.stopPropagation();
-                if (props.position) {
-                    dispatch({
-                        type: "add",
-                        position: new Vector3(props.position[0], 0, props.position[1])
-                    })
-                }
+                props.add()
             }}
         >
             <boxGeometry args={[1, .2, 1]} />
