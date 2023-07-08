@@ -1,9 +1,15 @@
-import { View, Box } from "@react-three/drei"
+import { View } from "@react-three/drei"
 import { Vector3 } from "@react-three/fiber"
-import { useContext } from "react"
+import { Suspense, useContext } from "react"
 import GameStateContext from "../context/GameStateContext"
 import { GSReducerType } from "../hooks/useGameState"
 import PreviewedPiece from "./previewedPiece"
+import { Gltf } from "@react-three/drei";
+import { Euler } from "three"
+import React from "react"
+
+const assetRotation1 = new Euler(Math.PI, 0, Math.PI / 2, 'XYZ')
+const assetRotation2 = new Euler(0, Math.PI, 0, 'XYZ')
 
 export default function PieceRotateArea(props: { pieceRotateDivRef: React.MutableRefObject<never> }) {
     const [_, dispatch]: GSReducerType = useContext(GameStateContext)
@@ -13,8 +19,9 @@ export default function PieceRotateArea(props: { pieceRotateDivRef: React.Mutabl
 
     return (
         <View index={2} track={props.pieceRotateDivRef}>
-            <RotateControl rotate={rotateX} position={[3, 0, 0] as Vector3} />
-            <RotateControl rotate={rotateY} position={[0, 3, 0] as Vector3} />
+            <RotateControl rotation={assetRotation1} rotate={rotateY} position={[0, 3, 0] as Vector3} />
+            <RotateControl rotation={assetRotation2} rotate={rotateX} position={[3, 0, 0] as Vector3} />
+
             <ambientLight intensity={0.5} />
             <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />
@@ -23,13 +30,23 @@ export default function PieceRotateArea(props: { pieceRotateDivRef: React.Mutabl
     )
 }
 
-function RotateControl(props: { rotate: () => void, position: Vector3 }) {
+function RotateControl(props: { rotate: () => void, rotation: Euler, position: Vector3 }) {
     return (
-        <Box
-            onClick={props.rotate}
+        <group
+            onClick={(e) => { e.stopPropagation(); props.rotate() }}
             position={props.position}
-        >
-            <meshBasicMaterial color="orange" />
-        </Box>
-    )
+            rotation={props.rotation}>
+            <mesh visible={false}>
+                <boxGeometry args={[1.5, 1.5, 1.5]} />
+                <meshStandardMaterial transparent={true} opacity={0.1} color={'green'} />
+            </mesh>
+            <Suspense >
+                <Gltf
+                    position={[-.5, 0, .5]}
+                    src="arrow.glb"
+                    scale={0.045}
+                />
+            </Suspense>
+        </group>
+    );
 }

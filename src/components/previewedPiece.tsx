@@ -16,7 +16,9 @@ export default function PreviewedPiece() {
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
-        <Center>
+        <Center
+            onCentered={() => { }}
+        >
             {coords.map((coord) => <PreviewCube
                 key={JSON.stringify(coord)}
                 position={coord}
@@ -39,9 +41,8 @@ function PreviewCube(props: { position: Vector3, owner: PlayerID }) {
                 position={props.position}
                 onClick={(e) => {
                     e.stopPropagation();
-                    dispatch({ 'type': 'setSelectedPieceOrigin', newOrigin: props.position })
-                }}
-            >
+                    dispatch({ 'type': 'setSelectedPieceOrigin', newOrigin: props.position });
+                }}>
                 <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
             </RoundedBox>
             {selected && <HighLightSelected />}
