@@ -4,6 +4,9 @@ import { useContext } from "react"
 import GameStateContext from "../context/GameStateContext"
 import { GSReducerType } from "../hooks/useGameState"
 import PreviewedPiece from "./previewedPiece"
+import RotateControlNew from './RotateControlNew'
+import { Model } from "./Scene"
+
 
 export default function PieceRotateArea(props: { pieceRotateDivRef: React.MutableRefObject<never> }) {
     const [_, dispatch]: GSReducerType = useContext(GameStateContext)
@@ -15,6 +18,9 @@ export default function PieceRotateArea(props: { pieceRotateDivRef: React.Mutabl
         <View index={2} track={props.pieceRotateDivRef}>
             <RotateControl rotate={rotateX} position={[3, 0, 0] as Vector3} />
             <RotateControl rotate={rotateY} position={[0, 3, 0] as Vector3} />
+
+            {/* <RotateControlNew rotate={rotateY} position={[0, 3, 1] as Vector3} /> */}
+
             <ambientLight intensity={0.5} />
             <spotLight position={[20, 20, 20]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />
@@ -28,7 +34,9 @@ function RotateControl(props: { rotate: () => void, position: Vector3 }) {
         <Box
             onClick={props.rotate}
             position={props.position}
-        >
+            matrixWorldAutoUpdate={undefined}
+            getObjectsByProperty={undefined}
+            getVertexPosition={undefined}>
             <meshBasicMaterial color="orange" />
         </Box>
     )

@@ -16,7 +16,7 @@ export default function PreviewedPiece() {
     const currentPlayer = gameState.getCurrentPlayer()
 
     return (
-        <Center>
+        <Center matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined}>
             {coords.map((coord) => <PreviewCube
                 key={JSON.stringify(coord)}
                 position={coord}
@@ -39,9 +39,8 @@ function PreviewCube(props: { position: Vector3, owner: PlayerID }) {
                 position={props.position}
                 onClick={(e) => {
                     e.stopPropagation();
-                    dispatch({ 'type': 'setSelectedPieceOrigin', newOrigin: props.position })
-                }}
-            >
+                    dispatch({ 'type': 'setSelectedPieceOrigin', newOrigin: props.position });
+                }} matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} getVertexPosition={undefined}            >
                 <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
             </RoundedBox>
             {selected && <HighLightSelected />}
@@ -53,8 +52,7 @@ function HighLightSelected() {
     return <mesh>
         <Edges
             scale={1}
-            color={"black"}
-        />
+            color={"black"} matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} />
         <boxGeometry args={[1, 1, 1]} />
         <meshBasicMaterial visible={false} />
     </mesh>

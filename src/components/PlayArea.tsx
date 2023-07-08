@@ -15,5 +15,5 @@ export function PlayArea(props: { gameAreaDivRef: React.MutableRefObject<never> 
 }
 
 const ShadowsOnce = React.memo(() => {
-    return <ContactShadows position={[0, -1, 0]} opacity={0.75} scale={10} blur={2.5} far={4} frames={1} />
+    return <ContactShadows position={[0, -1, 0]} opacity={0.75} scale={10} blur={2.5} far={4} frames={1} matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} />
 }, (a, b) => true);

@@ -4,21 +4,13 @@
   "private": true,
   "homepage": "https://ethanSE.github.io/block_game_clone",
   "dependencies": {
-    "@react-three/drei": "^9.46.0",
+    "@react-three/drei": "^9.78.1",
     "@react-three/fiber": "^8.8.10",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.2",
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.7",
     "fp-ts": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "three": "^0.146.0",
-    "typescript": "^4.8.4"
+    "three": "^0.154.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -47,7 +39,16 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.2",
+    "@types/react": "^18.0.23",
+    "@types/react-dom": "^18.0.7",
     "@types/three": "^0.144.0",
-    "gh-pages": "^5.0.0"
+    "gh-pages": "^5.0.0",
+    "gltfjsx": "^6.2.5",
+    "typescript": "^4.8.4"
   }
 }

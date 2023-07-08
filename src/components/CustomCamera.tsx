@@ -12,7 +12,7 @@ export default function CustomCamera() {
                 makeDefault
                 position={[-3, 6, 10]}
                 zoom={60}
-            />
+                matrixWorldAutoUpdate={undefined} getObjectsByProperty={undefined} />
             <OrbitControls
                 makeDefault
                 panSpeed={1}
