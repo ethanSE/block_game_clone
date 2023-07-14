@@ -1,31 +1,42 @@
-import { useRef } from 'react';
-//state/context
-import GameStateContext from '../context/GameStateContext';
-import { useGameState } from '../hooks/useGameState';
-
-//components
-import PieceSelectorContainer from './PieceSelector';
-import GameCanvas from './GameCanvas';
-
+import { useMemo, useState } from 'react';
 //styles
 import '../styles/App.css';
 
+import TwoPlayerLocal from './TwoPlayerLocal';
+import TopBar from './TopBar';
+import { Menu } from './menu/Menu';
+
+export type Mode = 'menu' | 'solitaire' | 'twoPlayerLocal';
+
 function App() {
-    const gameState = useGameState()
-    const containerDivRef = useRef(null!)
-    const gameAreaDivRef = useRef(null!)
-    const pieceRotateDivRef = useRef(null!)
+    const [mode, setMode] = useState<Mode>('menu');
+
+    const body = useMemo(() => {
+        switch (mode) {
+            case 'menu':
+                return <Menu setMode={setMode} />
+            case 'solitaire':
+                return <Solitaire />
+            case 'twoPlayerLocal':
+                return <TwoPlayerLocal />
+            default:
+                return <TwoPlayerLocal />
+        }
+    }, [mode])
 
     return (
-        <GameStateContext.Provider value={gameState}>
-            <div ref={containerDivRef} className='website'>
-                <div ref={pieceRotateDivRef} style={{ width: '100vw', height: '50%' }} />
-                <div ref={gameAreaDivRef} style={{ position: 'relative', width: '100vw', height: '50%' }} />
-                <GameCanvas gameAreaDivRef={gameAreaDivRef} pieceRotateDivRef={pieceRotateDivRef} />
-                <PieceSelectorContainer />
-            </div>
-        </GameStateContext.Provider >
-    );
+        <>
+            <TopBar back={() => setMode('menu')} />
+            {body}
+        </>
+    )
 }
 
 export default App;
+
+
+
+
+function Solitaire(props: any) {
+    return (<></>)
+}

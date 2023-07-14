@@ -2,11 +2,11 @@ import { useContext } from "react";
 import * as O from 'fp-ts/Option'
 
 //State/Context
-import GameStateContext from "../context/GameStateContext";
-import { GSReducerType } from "../hooks/useGameState";
+import GameStateContext from "../../context/GameStateContext";
+import { GSReducerType } from "../../hooks/useGameState";
 
 //Components
-import { PlayerID, p1Color, p2Color } from "../types";
+import { PlayerID, p1Color, p2Color } from "../../types";
 import { Center, Edges, RoundedBox } from "@react-three/drei";
 import { Vector3 } from "three";
 

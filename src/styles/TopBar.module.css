@@ -1,0 +1,25 @@
+.topBarContainer {
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    background-color: cadetblue;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.linkContainer {
+    background-color: burlywood;
+    display: flex;
+    margin-right: 5px;
+}
+
+.link {
+    padding: 5px;
+}
+
+.title {
+    position: relative;
+}
