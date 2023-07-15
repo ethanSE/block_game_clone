@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 import { GameState } from '../classes/GameState';
 import { PieceName, RotationAxis } from '../classes/Piece';
 import { Vector3 } from 'three';
+import { Mode } from '../components/App';
 
 export type GameStateAction =
     {
@@ -28,7 +29,7 @@ export type GameStateAction =
 //necessary to provide type hint to tsc
 export type GSReducerType = [GameState, (a: GameStateAction) => void];
 
-export function useGameState(): GSReducerType {
+export function useGameState(mode: Mode): GSReducerType {
     const [gameState, dispatch] = useReducer(reducer, new GameState())
 
     function reducer(state: GameState, action: GameStateAction): GameState {
