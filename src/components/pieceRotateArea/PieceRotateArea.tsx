@@ -41,14 +41,11 @@ function RotateControl(props: { rotate: () => void, rotation: Euler, position: V
                 <meshStandardMaterial transparent={true} opacity={0.1} color={'green'} />
             </mesh>
             <Suspense >
-
-
-                {/* <Gltf
-                        position={[-.5, 0, .5]}
-                        src="arrow.glb"
-                        scale={0.045}
-                    /> */}
-
+                <Gltf
+                    position={[-.5, 0, .5]}
+                    src="arrow.glb"
+                    scale={0.045}
+                />
             </Suspense>
         </group >
     );

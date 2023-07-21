@@ -11,15 +11,13 @@ export const Menu = (props: { setMode: (m: Mode) => void }) => {
 
             <div className={css.menuOptionsContainer}>
                 <h3>Select game mode:</h3>
-                <button>
+                {/* <button
+                    onClick={() => props.setMode('solitaire')}>
                     Solitaire
-                </button>
+                </button> */}
                 <button
                     onClick={() => props.setMode('twoPlayerLocal')}>
                     Two Player Local
-                </button>
-                <button>
-                    Two Player Online
                 </button>
             </div>
         </div>

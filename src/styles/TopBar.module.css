@@ -10,16 +10,6 @@
     align-items: center;
 }
 
-.linkContainer {
-    background-color: burlywood;
-    display: flex;
-    margin-right: 5px;
-}
-
-.link {
-    padding: 5px;
-}
-
-.title {
-    position: relative;
+.topBarContainerItem {
+    flex: 1 1 0;
 }
