@@ -1,7 +1,5 @@
 .topBarContainer {
     height: 40px;
-    position: absolute;
-    top: 0px;
     background-color: cadetblue;
     width: 100vw;
     display: flex;
@@ -12,4 +10,10 @@
 
 .topBarContainerItem {
     flex: 1 1 0;
+}
+
+.link {
+    margin: 10px;
+    width: 50px;
+    cursor: pointer;
 }

@@ -16,15 +16,7 @@
     height: auto;
 }
 
-.passButton {
-    border-radius: 10px;
-    border-color: coral;
-    background-color: orange;
-    width: 100px;
-    height: 50px;
-}
-
-.playerColorIndicator {
+*/ .playerColorIndicator {
     margin: 5px;
     width: 50px;
     height: 50px;
@@ -33,7 +25,7 @@
 
 .p1 {
     composes: playerColorIndicator;
-    background-color:#000080
+    background-color: #000080
 }
 
 .p2 {
