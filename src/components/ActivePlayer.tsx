@@ -10,8 +10,8 @@ function ActivePlayer() {
     const currentPlayer = gameState.getCurrentPlayer();
 
     return (
-        <div className={css['activePlayer']}>
-            <div className={css['activePlayerRow']}>
+        <div className={css.activePlayer}>
+            <div className={css.activePlayerRow}>
                 <h1>Current Player: </h1>
                 <div className={css[currentPlayer]}></div>
             </div>

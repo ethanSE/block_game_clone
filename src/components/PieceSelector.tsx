@@ -31,7 +31,6 @@ function PassTurnButton(props: { onClick: () => void }) {
     return (
         <button
             onClick={props.onClick}
-            className={css.passButton}
         >
             Pass Turn
         </button>
