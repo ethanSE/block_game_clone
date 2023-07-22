@@ -5,8 +5,9 @@
 }
 
 .pieceGroup {
+    flex: 1;
     padding: 5px;
-    max-width: 45%;
+    margin: 5px;
     display: grid;
     grid-template-columns: repeat(auto-fit, 50px);
     grid-auto-flow: row;
@@ -49,8 +50,8 @@
 }
 
 .available {
-    cursor: pointer;
     composes: piece;
+    cursor: pointer;
     background-color: teal;
 }
 
