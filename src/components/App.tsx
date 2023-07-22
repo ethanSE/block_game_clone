@@ -1,31 +1,22 @@
-import { useRef } from 'react';
-//state/context
-import GameStateContext from '../context/GameStateContext';
-import { useGameState } from '../hooks/useGameState';
+import { useState } from 'react';
 
-//components
-import PieceSelectorContainer from './PieceSelector';
-import GameCanvas from './GameCanvas';
+import TopBar from './TopBar';
+import { Menu } from './menu/Menu';
+import Game from './Game';
 
-//styles
-import '../styles/App.css';
+import css from '../styles/App.module.css';
+
+export type Mode = 'menu' | 'solitaire' | 'twoPlayerLocal';
 
 function App() {
-    const gameState = useGameState()
-    const containerDivRef = useRef(null!)
-    const gameAreaDivRef = useRef(null!)
-    const pieceRotateDivRef = useRef(null!)
+    const [mode, setMode] = useState<Mode>('menu');
 
     return (
-        <GameStateContext.Provider value={gameState}>
-            <div ref={containerDivRef} className='website'>
-                <div ref={pieceRotateDivRef} style={{ width: '100vw', height: '50%' }} />
-                <div ref={gameAreaDivRef} style={{ position: 'relative', width: '100vw', height: '50%' }} />
-                <GameCanvas gameAreaDivRef={gameAreaDivRef} pieceRotateDivRef={pieceRotateDivRef} />
-                <PieceSelectorContainer />
-            </div>
-        </GameStateContext.Provider >
-    );
+        <div className={css.app}>
+            <TopBar back={() => setMode('menu')} />
+            {mode === 'menu' ? <Menu setMode={setMode} /> : <Game mode={mode} />}
+        </div>
+    )
 }
 
 export default App;

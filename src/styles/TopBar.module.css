@@ -1,0 +1,19 @@
+.topBarContainer {
+    height: 40px;
+    background-color: cadetblue;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topBarContainerItem {
+    flex: 1 1 0;
+}
+
+.link {
+    margin: 10px;
+    width: 50px;
+    cursor: pointer;
+}

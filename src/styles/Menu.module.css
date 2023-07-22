@@ -1,0 +1,22 @@
+.menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: tan;
+}
+
+.menuDemoContainer {
+    flex-grow: 1;
+    position: relative;
+}
+
+.menuOptionsContainer {
+    background-color: teal;
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 10px;
+}

@@ -9,13 +9,13 @@
     max-width: 45%;
     display: grid;
     grid-template-columns: repeat(auto-fit, 50px);
-    grid-auto-flow: row; 
+    grid-auto-flow: row;
     gap: 5px;
 }
 
 .p1 {
     composes: pieceGroup;
-    background-color:#000080
+    background-color: #000080
 }
 
 .p2 {
@@ -43,11 +43,13 @@
     align-items: center;
     border: 2px solid gold;
 }
+
 .active {
     border-radius: 10px;
 }
 
 .available {
+    cursor: pointer;
     composes: piece;
     background-color: teal;
 }
