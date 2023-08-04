@@ -1,25 +1,23 @@
-import { Vector3 } from "three";
-import { PlayerID, p1Color, p2Color } from "../types";
+import { p1Color, p2Color } from "../types";
 import { RoundedBox } from "@react-three/drei";
-import React from "react";
+import { Cube } from "block-game-clone-backend/types/Cube";
+import { Action } from "block-game-clone-backend/types/Action";
 
-export default React.memo((props: { position: Vector3, owner: PlayerID, onClick: () => void, onHover: () => void }) => {
+const CubeC = (props: { cube: Cube, update: (a: Action) => void }) => {
     return (
         <RoundedBox
             args={[0.99, 0.99, 0.99]}
             castShadow={false}
             radius={0.05}
             smoothness={4}
-            position={props.position}
-            onPointerOver={(event) => {
-                event.stopPropagation();
-                props.onHover();
-            }}
+            position={props.cube.position}
             onClick={(e) => {
                 e.stopPropagation();
-                props.onClick();
+                props.update({ type: 'PreviewPiece', data: [props.cube.position[0], props.cube.position[1] + 1, props.cube.position[2]] });
             }}>
-            <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
+            <meshPhongMaterial color={props.cube.player === 'p1' ? p1Color : p2Color} />
         </RoundedBox>
     );
-}, (a, b) => true);
+}
+
+export default CubeC;

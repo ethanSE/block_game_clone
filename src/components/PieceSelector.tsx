@@ -1,57 +1,61 @@
-import { useContext } from "react";
-
-import * as O from 'fp-ts/Option'
-
-//State/Context
-import GameStateContext from "../context/GameStateContext";
-import { GSReducerType } from "../hooks/useGameState";
-
 //styles
 import css from '../styles/PieceSelector.module.css'
-import { PlayerID } from "../types";
-import { PieceName } from "../classes/Piece";
 
-export default function PieceSelectorContainer() {
-    const [_, dispatch]: GSReducerType = useContext(GameStateContext)
+import { GameState } from "block-game-clone-backend/types/GameState";
+import { Action } from "block-game-clone-backend/types/Action";
+import { PlayerHandState } from "block-game-clone-backend/types/PlayerHandState";
+import { Piece } from "block-game-clone-backend/types/Piece";
+import { PieceName } from 'block-game-clone-backend/types/PieceName';
+import { Player } from 'block-game-clone-backend/types/Player';
 
+export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
     return (
         <div className={css.pieceSelectorContainer}>
             <PieceSelector
+                hand={props.state.player_state.players["p1"]}
+                update={props.update}
                 playerID='p1'
+                active={props.state.player_state.current_player === 'p1'}
             />
-            <PassTurnButton onClick={() => dispatch({ type: "passTurn" })} />
+            <CButton label={"Pass Turn"} onClick={() => props.update({ type: 'PassTurn' })} />
+            <CButton label={"Play Piece"} onClick={() => props.update({ type: 'PlayPreviewedPiece' })} />
             <PieceSelector
+                hand={props.state.player_state.players["p2"]}
+                update={props.update}
                 playerID='p2'
-            />
+                active={props.state.player_state.current_player === 'p2'} />
         </div>
     );
 }
 
-function PassTurnButton(props: { onClick: () => void }) {
+function CButton(props: { label: string, onClick: () => void }) {
     return (
         <button
             onClick={props.onClick}
         >
-            Pass Turn
+            {props.label}
         </button>
     )
 }
 
-function PieceSelector(props: { playerID: PlayerID }) {
-    const [gameState, dispatch]: GSReducerType = useContext(GameStateContext)
-    const isCurrentPlayer = gameState.getCurrentPlayer() === props.playerID
-    const pieces = gameState.getPlayerPieces(props.playerID)
-    const selectedPieceName = O.getOrElse(() => '')(gameState.getSelectedPieceName());
+
+
+function PieceSelector(props: { hand: PlayerHandState, update: (a: Action) => void, playerID: Player, active: boolean }) {
+    const pieces = Object.entries(props.hand.pieces) as [PieceName, Piece | null][];
+    const selectedPieceName = props.hand.selected_piece;
 
     return (
-        <div className={isCurrentPlayer ? css[`${props.playerID}Active`] : css[props.playerID]}>
+        <div className={props.active ? css[`${props.playerID}Active`] : css[props.playerID]}>
             {
-                pieces.map(([pieceName, piece]) =>
+                pieces.map(([pieceName, piece]: [PieceName, Piece | null]) =>
                     <PieceSelectorItem
                         key={`${pieceName}${props.playerID}`}
                         pieceName={pieceName}
-                        status={isCurrentPlayer && pieceName === selectedPieceName ? 'selected' : piece.isAvailable() ? 'available' : 'unavailable'}
-                        setSelected={() => isCurrentPlayer && dispatch({ type: 'selectPiece', pieceName: pieceName })}
+                        status={props.active && pieceName === selectedPieceName ? 'selected' : piece ? 'available' : 'unavailable'}
+                        setSelected={() => props.active && props.update({
+                            type: "SelectPiece",
+                            data: pieceName
+                        })}
                     />
                 )
             }
