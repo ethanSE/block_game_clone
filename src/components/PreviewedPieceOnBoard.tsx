@@ -1,37 +1,32 @@
-import { useContext } from "react"
-import { GSReducerType } from "../hooks/useGameState"
-import GameStateContext from "../context/GameStateContext"
-import * as O from "fp-ts/Option"
-import { PlayerID, PreviewCubeError, p1Color, p2Color } from "../types"
-import { Vector3 } from "three"
+import { p1Color, p2Color } from "../types"
+import { Cube } from "block-game-clone-backend/types/Cube"
+import { GameState } from "block-game-clone-backend/types/GameState"
 
-export function PreviewedPieceOnBoard() {
-    const [gameState, _]: GSReducerType = useContext(GameStateContext)
-    const previewed = gameState.getPreviewCubes()
-    const currentPlayer = gameState.getCurrentPlayer()
+export function PreviewedPieceOnBoard(props: { gameState: GameState }) {
+    const previewed = props.gameState.board_state.previewed_piece
 
     return (
         <group
             castShadow={false}
             receiveShadow={false}>
             {
-                previewed.map((p) => <PreviewCube
-                    key={JSON.stringify(p)}
-                    position={p.position}
-                    error={p.error}
-                    owner={currentPlayer}
+                previewed?.map((c) => <PreviewCube
+                    key={JSON.stringify(c)}
+                    cube={c}
                 />)
             }
         </group>
     )
 }
 
-function PreviewCube(props: { position: Vector3, owner: PlayerID, error: O.Option<PreviewCubeError> }) {
-    const color = O.isNone(props.error) ? props.owner === 'p1' ? p1Color : p2Color : "red"
+function PreviewCube(props: { cube: Cube }) {
+
+    console.log(props)
+    const color = props.cube.error ? "red" : props.cube.player === 'p1' ? p1Color : p2Color
     return (
         <mesh
             castShadow={false}
-            position={props.position}
+            position={props.cube.position}
         >
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color={color} opacity={0.5} transparent={true} />

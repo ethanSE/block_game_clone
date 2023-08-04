@@ -2,24 +2,39 @@ import React from "react";
 import { Vector3 } from "three";
 
 //Components
-import Cube from "../Cube";
-import { OwnedCube } from "../../types";
+import CubeC from "../Cube";
+import { BoardState } from "block-game-clone-backend/types/BoardState";
+import { Cube } from "block-game-clone-backend/types/Cube";
+import { Action } from "block-game-clone-backend/types/Action";
+import { BoardCell } from "block-game-clone-backend/types/BoardCell";
 
-const CubesOnBoard = React.memo((props: { inPlayCubes: OwnedCube[], onHover: (v: Vector3) => void, onClick: (v: Vector3) => void }) => {
+const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => void }) => {
+
+    //TODO - clean up? - functional abstraction(?) - memoize(?)
+
+    let cubes = props.boardState.pieces.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
+        let cube: { position: [number, number, number], cell: BoardCell } = {
+            position: [x, y, z],
+            cell: bc
+        }
+        return cube
+    }))).filter((bc) => bc.cell.type === "Player").map((c) => {
+        let a: Cube = {
+            position: c.position,
+            error: null,
+            player: c.cell.type === "Player" ? c.cell.data : "p1"
+        }
+        return a;
+    });
+
     return (
         <>
-            {props.inPlayCubes.map(
-                (piece) =>
-                    <Cube
-                        key={JSON.stringify(piece.position)}
-                        position={piece.position}
-                        owner={piece.owner}
-                        onClick={() => props.onClick(piece.position)}
-                        onHover={() => props.onHover(piece.position)}
-                    />
+            {cubes.map(
+                (cube) =>
+                    <CubeC cube={cube} update={props.update} />
             )}
         </>
     );
-}, (a, b) => a.inPlayCubes.length === b.inPlayCubes.length)
+}
 
-export default CubesOnBoard
+export default CubesOnBoard;

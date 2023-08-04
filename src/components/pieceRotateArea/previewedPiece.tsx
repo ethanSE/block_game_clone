@@ -1,51 +1,43 @@
-import { useContext } from "react";
-import * as O from 'fp-ts/Option'
-
-//State/Context
-import GameStateContext from "../../context/GameStateContext";
-import { GSReducerType } from "../../hooks/useGameState";
-
 //Components
-import { PlayerID, p1Color, p2Color } from "../../types";
+import { p1Color, p2Color } from "../../types";
 import { Center, Edges, RoundedBox } from "@react-three/drei";
-import { Vector3 } from "three";
+import { Action } from "block-game-clone-backend/types/Action";
+import { Cube } from "block-game-clone-backend/types/Cube";
+import { Piece } from "block-game-clone-backend/types/Piece";
+import { Player } from "block-game-clone-backend/types/Player";
 
-export default function PreviewedPiece() {
-    const [gameState, _]: GSReducerType = useContext(GameStateContext)
-    const coords = O.getOrElse(() => [] as Vector3[])(gameState.getSelectedPieceCoords())
-    const currentPlayer = gameState.getCurrentPlayer()
+export default function PreviewedPiece(props: { piece: Piece, owner: Player, update: (a: Action) => void }) {
 
     return (
         <Center
             onCentered={() => { }}
         >
-            {coords.map((coord) => <PreviewCube
+            {props.piece.coords.map((coord) => <PreviewCube
                 key={JSON.stringify(coord)}
-                position={coord}
-                owner={currentPlayer}
+                cube={{ player: props.owner, position: coord, error: null }}
+                //TODO - improve
+                selected={coord[0] === 0 && coord[1] === 0 && coord[2] === 0}
+                setSelectedPieceOrigin={() => props.update({ type: 'SetSelectedPieceOrigin', data: coord })}
             />)}
         </Center >
     );
 }
 
-function PreviewCube(props: { position: Vector3, owner: PlayerID }) {
-    const [_, dispatch] = useContext(GameStateContext)
-    const selected = props.position.equals(new Vector3(0, 0, 0))
-
+function PreviewCube(props: { cube: Cube, selected: boolean, setSelectedPieceOrigin: () => void }) {
     return (
         <>
             <RoundedBox
                 args={[0.99, 0.99, 0.99]}
                 radius={0.05}
                 smoothness={4}
-                position={props.position}
+                position={props.cube.position}
                 onClick={(e) => {
                     e.stopPropagation();
-                    dispatch({ 'type': 'setSelectedPieceOrigin', newOrigin: props.position });
+                    props.setSelectedPieceOrigin();
                 }}>
-                <meshPhongMaterial color={props.owner === 'p1' ? p1Color : p2Color} />
+                <meshPhongMaterial color={props.cube.player === 'p1' ? p1Color : p2Color} />
             </RoundedBox>
-            {selected && <HighLightSelected />}
+            {props.selected && <HighLightSelected />}
         </>
     );
 }

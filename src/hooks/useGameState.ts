@@ -1,55 +1,49 @@
-import { useReducer } from 'react';
-import { GameState } from '../classes/GameState';
-import { PieceName, RotationAxis } from '../classes/Piece';
-import { Vector3 } from 'three';
-import { Mode } from '../components/App';
+import { useEffect, useState } from "react";
 
-export type GameStateAction =
-    {
-        type: 'reset'
-    } | {
-        type: 'add',
-        position: Vector3
-    } | {
-        type: 'passTurn'
-    } | {
-        type: 'selectPiece',
-        pieceName: PieceName
-    } | {
-        type: 'rotateSelectedPiece'
-        axis: RotationAxis
-    } | {
-        type: 'previewPiece'
-        position: Vector3
-    } | {
-        type: 'setSelectedPieceOrigin'
-        newOrigin: Vector3
-    }
+import init, * as wasmModule from "block-game-clone-backend";
+import { GameState } from "block-game-clone-backend/types/GameState"
+import { Action } from "block-game-clone-backend/types/Action"
 
-//necessary to provide type hint to tsc
-export type GSReducerType = [GameState, (a: GameStateAction) => void];
+export function useWasm() {
+    const [wasm, setWasm] = useState<typeof import("block-game-clone-backend")>()
 
-export function useGameState(mode: Mode): GSReducerType {
-    const [gameState, dispatch] = useReducer(reducer, new GameState())
+    useEffect(() => {
+        const loadWasm = async () => {
+            await init()
+            setWasm(wasmModule)
+        }
+        loadWasm()
+    }, [])
 
-    function reducer(state: GameState, action: GameStateAction): GameState {
-        switch (action.type) {
-            case 'selectPiece':
-                return state.selectPiece(action.pieceName)
-            case 'add':
-                return state.playPreviewedPiece()
-            case 'reset':
-                return new GameState();
-            case 'passTurn':
-                return state.passTurn();
-            case 'rotateSelectedPiece':
-                return state.rotateSelectedPiece(action.axis)
-            case 'setSelectedPieceOrigin':
-                return state.setSelectedPieceOrigin(action.newOrigin)
-            case 'previewPiece':
-                return state.previewPiece(action.position)
+    return wasm
+}
+
+export function useGameState() {
+    const wasm = useWasm();
+    const [state, setState] = useState<GameState>();
+
+    useEffect(() => {
+        if (wasm) {
+            let s = wasm.get_default_game_state();
+
+            let gs = JSON.parse(s);
+            console.log(gs)
+
+            let gs2 = gs as GameState;
+
+
+            setState(gs2)
+        }
+    }, [wasm])
+
+    const update = (action: Action) => {
+        if (wasm) {
+            let s = wasm.next_game_state(JSON.stringify(state), JSON.stringify(action));
+            let gs = JSON.parse(s) as GameState;
+
+            setState(gs)
         }
     }
 
-    return [gameState, dispatch]
+    return { state, update }
 }

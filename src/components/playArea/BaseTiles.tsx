@@ -1,40 +1,40 @@
 import React from "react";
-import { BaseTile } from "../../types";
+import { BoardState } from "block-game-clone-backend/types/BoardState";
+import { Action } from "block-game-clone-backend/types/Action";
 
-export const BaseTiles = React.memo((props: { baseTiles: BaseTile[], onHover: (bt: BaseTile) => void, onClick: (bt: BaseTile) => void }) => {
+export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) => void }) => {
+    //TODO - probably incorrect x,y,z - > y is vertical?
+    const indices = props.boardState.pieces.flatMap((a, x) => a.map((b, y) => [x, y] as [number, number]));
+
     return (
         <>
             {
-                props.baseTiles.map((item, index) =>
+                indices.map((index) =>
                     <BaseTileComponent
-                        position={item.position}
+                        position={index}
                         key={index.toString()}
-                        onHover={() => props.onHover(item)}
-                        onClick={() => props.onClick(item)}
+                        update={props.update}
                     />)
             }
         </>
     )
-}, (a, b) => true)
+};
 
 
-const BaseTileComponent = React.memo((props: { position: [number, number], onHover: () => void, onClick: () => void }) => {
+const BaseTileComponent = (props: { position: [number, number], update: (a: Action) => void }) => {
     return (
         <mesh
             receiveShadow={false}
             castShadow={false}
             position={[props.position[0], -.6, props.position[1]]}
-            onPointerOver={(event) => {
-                event.stopPropagation();
-                props.onHover()
-            }}
             onClick={(event) => {
                 event.stopPropagation();
-                props.onClick()
+                //TODO - fix indices
+                props.update({ type: 'PreviewPiece', data: [props.position[0], 0, props.position[1]] })
             }}
         >
             <boxGeometry args={[1, .2, 1]} />
             <meshPhongMaterial color={"grey"} />
         </mesh>
     );
-}, (a, b) => true);
+};
