@@ -7,8 +7,12 @@ import { PlayerHandState } from "block-game-clone-backend/types/PlayerHandState"
 import { Piece } from "block-game-clone-backend/types/Piece";
 import { PieceName } from 'block-game-clone-backend/types/PieceName';
 import { Player } from 'block-game-clone-backend/types/Player';
+import { useContext } from 'react';
+import { HeightIndicatorContext } from './Game';
 
 export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
+    const { showMaxHeightIndicators, setShowMaxHeightIndicators } = useContext(HeightIndicatorContext);
+
     return (
         <div className={css.pieceSelectorContainer}>
             <PieceSelector
@@ -18,6 +22,7 @@ export default function PieceSelectorContainer(props: { state: GameState, update
                 active={props.state.player_state.current_player === 'p1'}
             />
             <CButton label={"Pass Turn"} onClick={() => props.update({ type: 'PassTurn' })} />
+            <CButton label={"toggle view height limit"} onClick={() => setShowMaxHeightIndicators(!showMaxHeightIndicators)} />
             <CButton label={"Play Piece"} onClick={() => props.update({ type: 'PlayPreviewedPiece' })} />
             <PieceSelector
                 hand={props.state.player_state.players["p2"]}

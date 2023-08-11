@@ -24,14 +24,9 @@ export function useGameState() {
 
     useEffect(() => {
         if (wasm) {
-            let s = wasm.get_default_game_state();
-
+            let s = wasm.new_two_player_four_by_five();
             let gs = JSON.parse(s);
-            console.log(gs)
-
             let gs2 = gs as GameState;
-
-
             setState(gs2)
         }
     }, [wasm])

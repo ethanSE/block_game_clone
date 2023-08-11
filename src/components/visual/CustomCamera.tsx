@@ -21,7 +21,7 @@ export default function CustomCamera() {
                 maxPolarAngle={maxVerticalViewAngle} //cannot move camera below board plane
                 enablePan={false}
                 minDistance={6}
-                minZoom={40}
+                minZoom={35}
                 maxZoom={80}
             />
         </>

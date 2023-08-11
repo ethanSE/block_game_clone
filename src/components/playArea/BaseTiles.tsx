@@ -1,17 +1,17 @@
-import React from "react";
+import { useMemo } from "react";
 import { BoardState } from "block-game-clone-backend/types/BoardState";
+import { BoardCell } from "block-game-clone-backend/types/BoardCell";
 import { Action } from "block-game-clone-backend/types/Action";
 
 export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) => void }) => {
-    //TODO - probably incorrect x,y,z - > y is vertical?
-    const indices = props.boardState.pieces.flatMap((a, x) => a.map((b, y) => [x, y] as [number, number]));
+    const baseTiles = useMemo(() => props.boardState.pieces.cells.flatMap((a, x) => a[0].map((b, z): [BoardCell["type"], [number, number]] => [b.type, [x, z]])).filter((i) => i[0] !== "OutOfBounds"), []);
 
     return (
         <>
             {
-                indices.map((index) =>
+                baseTiles.map((index) =>
                     <BaseTileComponent
-                        position={index}
+                        position={index[1]}
                         key={index.toString()}
                         update={props.update}
                     />)
@@ -25,11 +25,10 @@ const BaseTileComponent = (props: { position: [number, number], update: (a: Acti
     return (
         <mesh
             receiveShadow={false}
-            castShadow={false}
+            castShadow={true}
             position={[props.position[0], -.6, props.position[1]]}
             onClick={(event) => {
                 event.stopPropagation();
-                //TODO - fix indices
                 props.update({ type: 'PreviewPiece', data: [props.position[0], 0, props.position[1]] })
             }}
         >
