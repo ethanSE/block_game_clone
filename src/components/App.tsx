@@ -5,9 +5,9 @@ import { Menu } from './menu/Menu';
 import Game from './Game';
 
 import css from '../styles/App.module.css';
+import { GameMode } from 'block-game-clone-backend/types/GameMode';
 
-
-export type Mode = 'menu' | 'solitaire' | 'twoPlayerLocal';
+export type Mode = 'menu' | GameMode;
 
 function App() {
     const [mode, setMode] = useState<Mode>('menu');
@@ -15,7 +15,7 @@ function App() {
     return (
         <div className={css.app}>
             <TopBar back={() => setMode('menu')} />
-            {mode === 'menu' ? <Menu setMode={setMode} /> : <Game />}
+            {mode === 'menu' ? <Menu setMode={setMode} /> : <Game mode={mode} />}
         </div>
     )
 }

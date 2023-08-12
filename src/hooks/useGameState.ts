@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import init, * as wasmModule from "block-game-clone-backend";
 import { GameState } from "block-game-clone-backend/types/GameState"
 import { Action } from "block-game-clone-backend/types/Action"
+import { GameMode } from "block-game-clone-backend/types/GameMode";
 
 export function useWasm() {
     const [wasm, setWasm] = useState<typeof import("block-game-clone-backend")>()
@@ -18,29 +19,23 @@ export function useWasm() {
     return wasm
 }
 
-export function useGameState() {
+export function useGameState(mode: GameMode) {
     const wasm = useWasm();
     const [state, setState] = useState<GameState>();
 
     useEffect(() => {
         if (wasm) {
-            let s = wasm.get_default_game_state();
-
-            let gs = JSON.parse(s);
-            console.log(gs)
-
-            let gs2 = gs as GameState;
-
-
-            setState(gs2)
+            console.log("mode in useGameState", mode)
+            let str = wasm.new_game(JSON.stringify(mode));
+            let gs = JSON.parse(str) as GameState;
+            setState(gs)
         }
-    }, [wasm])
+    }, [wasm, mode])
 
     const update = (action: Action) => {
         if (wasm) {
-            let s = wasm.next_game_state(JSON.stringify(state), JSON.stringify(action));
-            let gs = JSON.parse(s) as GameState;
-
+            let str = wasm.next_game_state(JSON.stringify(state), JSON.stringify(action));
+            let gs = JSON.parse(str) as GameState;
             setState(gs)
         }
     }

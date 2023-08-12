@@ -11,13 +11,13 @@ export const Menu = (props: { setMode: (m: Mode) => void }) => {
 
             <div className={css.menuOptionsContainer}>
                 <h3>Select game mode:</h3>
-                {/* <button
-                    onClick={() => props.setMode('solitaire')}>
-                    Solitaire
-                </button> */}
                 <button
-                    onClick={() => props.setMode('twoPlayerLocal')}>
-                    Two Player Local
+                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "FourByFiveByFour" } })}>
+                    Two Player Local - 4x5x4
+                </button>
+                <button
+                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "Pyramid" } })}>
+                    Two Player Local - Pyramid
                 </button>
             </div>
         </div>

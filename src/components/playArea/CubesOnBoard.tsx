@@ -1,6 +1,3 @@
-import React from "react";
-import { Vector3 } from "three";
-
 //Components
 import CubeC from "../Cube";
 import { BoardState } from "block-game-clone-backend/types/BoardState";
@@ -12,7 +9,7 @@ const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => vo
 
     //TODO - clean up? - functional abstraction(?) - memoize(?)
 
-    let cubes = props.boardState.pieces.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
+    let cubes = props.boardState.pieces.cells.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
         let cube: { position: [number, number, number], cell: BoardCell } = {
             position: [x, y, z],
             cell: bc
@@ -31,7 +28,7 @@ const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => vo
         <>
             {cubes.map(
                 (cube) =>
-                    <CubeC cube={cube} update={props.update} />
+                    <CubeC cube={cube} update={props.update} key={cube.position.toString()} />
             )}
         </>
     );

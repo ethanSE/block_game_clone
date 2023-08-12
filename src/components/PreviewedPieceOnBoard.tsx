@@ -20,8 +20,6 @@ export function PreviewedPieceOnBoard(props: { gameState: GameState }) {
 }
 
 function PreviewCube(props: { cube: Cube }) {
-
-    console.log(props)
     const color = props.cube.error ? "red" : props.cube.player === 'p1' ? p1Color : p2Color
     return (
         <mesh
