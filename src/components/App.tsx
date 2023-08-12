@@ -5,9 +5,9 @@ import { Menu } from './menu/Menu';
 import Game from './Game';
 
 import css from '../styles/App.module.css';
+import { GameMode } from 'block-game-clone-backend/types/GameMode';
 
-
-export type Mode = 'menu' | '2pPyramid' | '2p4x5x4';
+export type Mode = 'menu' | GameMode;
 
 function App() {
     const [mode, setMode] = useState<Mode>('menu');

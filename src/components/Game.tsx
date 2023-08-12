@@ -11,11 +11,11 @@ import CustomCamera from './visual/CustomCamera';
 
 //styles
 import css from '../styles/Game.module.css'
-import { Mode } from './App';
+import { GameMode } from 'block-game-clone-backend/types/GameMode';
 
 export const ShowAvailableSpaceContext = createContext({ showAvailableSpace: false, setShowAvailableSpace: (_: boolean) => { } });
 
-export default function Game(props: { mode: Mode }) {
+export default function Game(props: { mode: GameMode }) {
     console.log(props.mode)
     const { state, update } = useGameState(props.mode)
 
