@@ -4,10 +4,9 @@ import { BaseTiles } from "./BaseTiles";
 import CubesOnBoard from "./CubesOnBoard";
 import { GameState } from "block-game-clone-backend/types/GameState";
 import { Action } from "block-game-clone-backend/types/Action";
-import BuildHeightLimitIndicators from "./BuildHeightLimitIndicators";
 import { Vector3 } from "three";
 import { Shadows } from "../visual/Shadows";
-import { Box, ContactShadows } from "@react-three/drei";
+import AvailableBuildSpace from "./AvailableBuildSpace";
 
 export default function GameBoard(props: { gameState: GameState, update: (a: Action) => void }) {
     let a = props.gameState.board_state.pieces.center;
@@ -19,7 +18,7 @@ export default function GameBoard(props: { gameState: GameState, update: (a: Act
                 <BaseTiles boardState={props.gameState.board_state} update={props.update} />
                 <CubesOnBoard boardState={props.gameState.board_state} update={props.update} />
                 <PreviewedPieceOnBoard gameState={props.gameState} />
-                <BuildHeightLimitIndicators boardState={props.gameState.board_state} />
+                <AvailableBuildSpace boardState={props.gameState.board_state} />
             </group>
             <group position={[0, -0.75, 0]}>
                 <Shadows />

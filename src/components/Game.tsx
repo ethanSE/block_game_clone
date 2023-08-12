@@ -11,13 +11,15 @@ import CustomCamera from './visual/CustomCamera';
 
 //styles
 import css from '../styles/Game.module.css'
+import { Mode } from './App';
 
-export const HeightIndicatorContext = createContext({ showMaxHeightIndicators: false, setShowMaxHeightIndicators: (_: boolean) => { } });
+export const ShowAvailableSpaceContext = createContext({ showAvailableSpace: false, setShowAvailableSpace: (_: boolean) => { } });
 
-export default function Game() {
-    const { state, update } = useGameState()
+export default function Game(props: { mode: Mode }) {
+    console.log(props.mode)
+    const { state, update } = useGameState(props.mode)
 
-    const [showMaxHeightIndicators, setShowMaxHeightIndicators] = useState(false);
+    const [showAvailableSpace, setShowAvailableSpace] = useState(false);
     const gameAreaDivRef = useRef(null!)
     const pieceRotateDivRef = useRef(null!)
     const containerDivRef = useRef(null!)
@@ -25,7 +27,7 @@ export default function Game() {
     return (
         <div className={css.website}>
             {state &&
-                <HeightIndicatorContext.Provider value={{ showMaxHeightIndicators, setShowMaxHeightIndicators }}>
+                <ShowAvailableSpaceContext.Provider value={{ showAvailableSpace, setShowAvailableSpace }}>
                     <div ref={containerDivRef} className={css.canvasContainer} >
                         <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
                         <div ref={gameAreaDivRef} className={css.canvasSection} />
@@ -38,7 +40,7 @@ export default function Game() {
                         </Canvas>
                     </div>
                     <PieceSelectorContainer state={state} update={update} />
-                </HeightIndicatorContext.Provider>
+                </ShowAvailableSpaceContext.Provider>
             }
         </div >
     )

@@ -24,7 +24,7 @@ const MenuDemoGameBoard = () => {
     const row1: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Empty' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
     const row2: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Player', data: 'p1' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Empty' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
     const row3: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Player', data: 'p2' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Empty' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
-    const demoBoardState: BoardState = { pieces: { cells: [row1, row2, row3], height_limits: [], center: [2.0, 2.0, 2.0] }, previewed_piece: null };
+    const demoBoardState: BoardState = { pieces: { cells: [row1, row2, row3], height_limits: [[3, 3, 3], [3, 3, 3], [3, 3, 3]], center: [2.0, 2.0, 2.0] }, previewed_piece: null };
 
     return (
         <Center>

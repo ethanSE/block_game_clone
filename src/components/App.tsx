@@ -7,7 +7,7 @@ import Game from './Game';
 import css from '../styles/App.module.css';
 
 
-export type Mode = 'menu' | 'solitaire' | 'twoPlayerLocal';
+export type Mode = 'menu' | '2pPyramid' | '2p4x5x4';
 
 function App() {
     const [mode, setMode] = useState<Mode>('menu');
@@ -15,7 +15,7 @@ function App() {
     return (
         <div className={css.app}>
             <TopBar back={() => setMode('menu')} />
-            {mode === 'menu' ? <Menu setMode={setMode} /> : <Game />}
+            {mode === 'menu' ? <Menu setMode={setMode} /> : <Game mode={mode} />}
         </div>
     )
 }
