@@ -1,5 +1,5 @@
 //Components
-import { p1Color, p2Color } from "../../types";
+import { colors } from "../../types";
 import { Center, RoundedBox, Wireframe } from "@react-three/drei";
 import { Action } from "block-game-clone-backend/types/Action";
 import { Cube } from "block-game-clone-backend/types/Cube";
@@ -35,7 +35,7 @@ function PreviewCube(props: { cube: Cube, selected: boolean, setSelectedPieceOri
                     e.stopPropagation();
                     props.setSelectedPieceOrigin();
                 }}>
-                <meshPhongMaterial color={props.cube.player === 'p1' ? p1Color : p2Color} />
+                <meshPhongMaterial color={colors[props.cube.player]} />
             </RoundedBox>
             {props.selected && <HighLightSelected />}
         </>

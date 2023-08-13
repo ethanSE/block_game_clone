@@ -1,17 +1,22 @@
 .pieceSelectorContainer {
-    width: 100vw;
+    background-color: grey;
+    pointer-events: all;
+    flex: 1;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    padding: 5px;
 }
 
 .pieceGroup {
+    background-color: tan;
+    border-radius: 3px;
     flex: 1;
-    padding: 5px;
-    margin: 5px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 50px);
-    grid-auto-flow: row;
+    justify-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 5px;
+    padding: 5px;
 }
 
 .p1 {
@@ -24,40 +29,18 @@
     background-color: #008000;
 }
 
-.p1Active {
-    composes: p1;
-    box-shadow: 0px 0px 5px 5px #0ff;
-}
-
-.p2Active {
-    composes: p2;
-    box-shadow: 0px 0px 5px 5px #0ff;
-}
-
 .piece {
-    overflow: hidden;
-    box-sizing: border-box;
-    width: 50px;
-    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid gold;
-}
-
-.active {
-    border-radius: 10px;
+    border-radius: 3px;
 }
 
 .available {
     composes: piece;
     cursor: pointer;
     background-color: teal;
-}
-
-.selected {
-    composes: piece;
-    background-color: green;
 }
 
 .unavailable {
