@@ -48,6 +48,7 @@ function RotateControl(props: { rotate: () => void, rotation: Euler, position: V
                     src="arrow.glb"
                     scale={0.045}
                 />
+                {/* <Box /> */}
             </Suspense>
         </group >
     );

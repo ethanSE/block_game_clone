@@ -1,4 +1,4 @@
-import { p1Color, p2Color } from "../types"
+import { colors } from "../types"
 import { Cube } from "block-game-clone-backend/types/Cube"
 import { GameState } from "block-game-clone-backend/types/GameState"
 
@@ -20,7 +20,7 @@ export function PreviewedPieceOnBoard(props: { gameState: GameState }) {
 }
 
 function PreviewCube(props: { cube: Cube }) {
-    const color = props.cube.error ? "red" : props.cube.player === 'p1' ? p1Color : p2Color
+    const color = props.cube.error ? "red" : colors[props.cube.player]
     return (
         <mesh
             castShadow={false}

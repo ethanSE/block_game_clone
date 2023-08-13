@@ -54,6 +54,5 @@ const BaseTileComponent = (props: { position: [number, number], height: number, 
 const color = (n: number) => {
     const scale = interpolate(['#ffc371', '#ff5f6d']);
     let c = scale(n / 4);
-    console.log(c)
     return c
 }

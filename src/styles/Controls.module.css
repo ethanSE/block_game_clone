@@ -1,0 +1,48 @@
+.topControls {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+}
+
+.bottomControls {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(50% - 18px);
+    pointer-events: none;
+}
+
+
+.button {
+    position: absolute;
+    pointer-events: all;
+    z-index: 2;
+    height: 50px;
+    width: 70px;
+}
+
+.button1 {
+    composes: button;
+    top: 5px;
+    left: 5px;
+}
+
+.button2 {
+    composes: button;
+    top: 5px;
+    right: 5px;
+}
+
+.button3 {
+    composes: button;
+    bottom: 5px;
+    left: 5px;
+}
+
+.button4 {
+    composes: button;
+    bottom: 5px;
+    right: 5px;
+}
