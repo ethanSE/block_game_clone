@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/block_game_clone/static/css/main.4b693893.css",
-    "main.js": "/block_game_clone/static/js/main.479b1e3f.js",
-    "static/media/block_game_clone_backend_bg.wasm": "/block_game_clone/static/media/block_game_clone_backend_bg.2cda3392ec4e157ad7f7.wasm",
+    "main.css": "/block_game_clone/static/css/main.a70c55eb.css",
+    "main.js": "/block_game_clone/static/js/main.fb50413b.js",
+    "static/media/block_game_clone_backend_bg.wasm": "/block_game_clone/static/media/block_game_clone_backend_bg.367acb2726c6df9d9871.wasm",
     "index.html": "/block_game_clone/index.html",
-    "main.4b693893.css.map": "/block_game_clone/static/css/main.4b693893.css.map",
-    "main.479b1e3f.js.map": "/block_game_clone/static/js/main.479b1e3f.js.map"
+    "main.a70c55eb.css.map": "/block_game_clone/static/css/main.a70c55eb.css.map",
+    "main.fb50413b.js.map": "/block_game_clone/static/js/main.fb50413b.js.map"
   },
   "entrypoints": [
-    "static/css/main.4b693893.css",
-    "static/js/main.479b1e3f.js"
+    "static/css/main.a70c55eb.css",
+    "static/js/main.fb50413b.js"
   ]
 }
