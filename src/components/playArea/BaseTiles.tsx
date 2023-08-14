@@ -7,14 +7,9 @@ import interpolate from "color-interpolate";
 import { Wireframe } from "@react-three/drei";
 
 export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) => void }) => {
-    // const baseTiles = useMemo(() => props.boardState.pieces.cells.flatMap((a, x) => a[0].map((b, z): [BoardCell["type"], [number, number]] => [b.type, [x, z]])).filter((i) => i[0] !== "OutOfBounds"), []);
+    const tiles = props.boardState.board.height_limits.flatMap((rows, x) => rows.map((height, z): Tile => ({ position: [x, z], height: height })))
 
-    const tiles = props.boardState.pieces.height_limits.flatMap((rows, x) => rows.map((height, z): Tile => ({ position: [x, z], height: height })))
 
-    type Tile = {
-        position: [number, number],
-        height: number
-    }
 
     return (
         <>
@@ -31,6 +26,10 @@ export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) =
     )
 };
 
+type Tile = {
+    position: [number, number],
+    height: number
+}
 
 const BaseTileComponent = (props: { position: [number, number], height: number, update: (a: Action) => void }) => {
     return (

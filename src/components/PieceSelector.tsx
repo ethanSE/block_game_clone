@@ -6,6 +6,7 @@ import { Action } from "block-game-clone-backend/types/Action";
 import { Piece } from "block-game-clone-backend/types/Piece";
 import { PieceName } from 'block-game-clone-backend/types/PieceName';
 import { colors } from '../types';
+import PlayerIndicator from './PlayerIndicator';
 
 export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
     const current_player = props.state.player_state.current_player;
@@ -19,7 +20,7 @@ export default function PieceSelectorContainer(props: { state: GameState, update
 
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <h4>Current player: </h4>
-                    <div style={{ borderRadius: "3px", marginLeft: "5px", width: "25px", height: "25px", backgroundColor: colors[current_player] }}></div>
+                    <PlayerIndicator size={25} player={current_player} />
                 </div>
             </div>
             <div className={css.pieceGroup}>
@@ -40,9 +41,6 @@ export default function PieceSelectorContainer(props: { state: GameState, update
 }
 
 function PieceSelectorItem(props: PieceSelectorItemProps) {
-
-
-    //TODO - use images after dowload
     return (
         <div className={css[props.status]} onClick={() => props.status === 'available' && props.setSelected()}>
             <img style={{ width: "100%" }} src={`/block_game_clone/pieceImages/${props.pieceName}.png`} alt={props.pieceName} />
