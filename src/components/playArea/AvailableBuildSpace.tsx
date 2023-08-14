@@ -7,7 +7,7 @@ import interpolate from "color-interpolate";
 
 export default function AvailableBuildSpace(props: { boardState: BoardState }) {
     const { showAvailableSpace } = useContext(ShowAvailableSpaceContext);
-    let positions = props.boardState.pieces.cells.flatMap((rows, x) => rows.flatMap((cols, y) => cols.map((cell, z) => ({ cell: cell, position: [x, y, z] as [number, number, number] }))));
+    let positions = props.boardState.board.cells.flatMap((rows, x) => rows.flatMap((cols, y) => cols.map((cell, z) => ({ cell: cell, position: [x, y, z] as [number, number, number] }))));
 
     let empties = positions.filter(({ cell, position }) => cell.type === "Empty");
 

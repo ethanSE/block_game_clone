@@ -1,7 +1,8 @@
 .pieceSelectorContainer {
+    position: relative;
     background-color: grey;
     pointer-events: all;
-    flex: 1;
+    height: calc(50vh - 28px);
     display: flex;
     flex-direction: column;
     padding: 5px;

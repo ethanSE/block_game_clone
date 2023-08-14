@@ -9,8 +9,8 @@ import { Shadows } from "../visual/Shadows";
 import AvailableBuildSpace from "./AvailableBuildSpace";
 
 export default function GameBoard(props: { gameState: GameState, update: (a: Action) => void }) {
-    let a = props.gameState.board_state.pieces.center;
-    const cameraOffset = new Vector3().fromArray(a).negate();
+    let center = props.gameState.board_state.board.center;
+    const cameraOffset = new Vector3().fromArray(center).negate();
 
     return (
         <>

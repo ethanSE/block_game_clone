@@ -2,6 +2,8 @@
     position: absolute;
     width: 100%;
     top: 40px;
+    display: flex;
+    flex-direction: column;
 }
 
 .bottomControls {
@@ -45,4 +47,17 @@
     composes: button;
     bottom: 5px;
     right: 5px;
+}
+
+.scoreContainer {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.scoreRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center
 }

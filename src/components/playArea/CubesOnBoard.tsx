@@ -9,7 +9,7 @@ const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => vo
 
     //TODO - clean up? - functional abstraction(?) - memoize(?)
 
-    let cubes = props.boardState.pieces.cells.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
+    let cubes = props.boardState.board.cells.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
         let cube: { position: [number, number, number], cell: BoardCell } = {
             position: [x, y, z],
             cell: bc
