@@ -1,30 +1,31 @@
-import { useMemo } from "react";
 import { BoardState } from "block-game-clone-backend/types/BoardState";
-import { BoardCell } from "block-game-clone-backend/types/BoardCell";
 import { Action } from "block-game-clone-backend/types/Action";
-
-import interpolate from "color-interpolate";
 import { Wireframe } from "@react-three/drei";
+import { useShadows } from "../visual/Shadows";
+import interpolate from "color-interpolate";
 
 export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) => void }) => {
-    const tiles = props.boardState.board.height_limits.flatMap((rows, x) => rows.map((height, z): Tile => ({ position: [x, z], height: height })))
 
-
+    const tiles = props.boardState.board.height_limits.flatMap((rows, x) => rows.map((height, z): Tile => ({ position: [x, z], height: height }))).filter((tile) => tile.height > 0)
+    const { groupRef, CalculatedShadows } = useShadows(.5);
 
     return (
         <>
-            {
-                tiles.map(({ position, height }) =>
-                    <BaseTileComponent
-                        position={position}
-                        height={height}
-                        key={position.toString()}
-                        update={props.update}
-                    />)
-            }
+            <group ref={groupRef}>
+                {
+                    tiles.map(({ position, height }) =>
+                        <BaseTileComponent
+                            position={position}
+                            height={height}
+                            key={position.toString()}
+                            update={props.update}
+                        />)
+                }
+            </group>
+            <CalculatedShadows />
         </>
     )
-};
+}
 
 type Tile = {
     position: [number, number],
@@ -48,7 +49,6 @@ const BaseTileComponent = (props: { position: [number, number], height: number, 
         </mesh>
     );
 };
-
 
 const color = (n: number) => {
     const scale = interpolate(['#ffc371', '#ff5f6d']);

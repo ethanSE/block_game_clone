@@ -10,9 +10,7 @@ import { BoxGeometry } from "three";
 export default function PreviewedPiece(props: { piece: Piece, owner: Player, update: (a: Action) => void }) {
 
     return (
-        <Center
-            onCentered={() => { }}
-        >
+        <Center>
             {props.piece.coords.map((coord) => <PreviewCube
                 key={JSON.stringify(coord)}
                 cube={{ player: props.owner, position: coord, error: null }}

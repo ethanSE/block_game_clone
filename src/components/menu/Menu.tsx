@@ -12,12 +12,20 @@ export const Menu = (props: { setMode: (m: Mode) => void }) => {
             <div className={css.menuOptionsContainer}>
                 <h3>Select game mode:</h3>
                 <button
-                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "FourByFiveByFour" } })}>
-                    Two Player Local - 4x5x4
+                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "Tower" } })}>
+                    Two Player - Tower
                 </button>
                 <button
                     onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "Pyramid" } })}>
-                    Two Player Local - Pyramid
+                    Two Player - Pyramid
+                </button>
+                <button
+                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "Wall" } })}>
+                    Two Player - Wall
+                </button>
+                <button
+                    onClick={() => props.setMode({ type: "TwoPlayer", data: { type: "Stairs" } })}>
+                    Two Player - Stairs
                 </button>
             </div>
         </div>

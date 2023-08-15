@@ -6,15 +6,12 @@ import { BoardState } from "block-game-clone-backend/types/BoardState"
 import { BaseTiles } from "../playArea/BaseTiles"
 import CubesOnBoard from "../playArea/CubesOnBoard"
 import { BoardCell } from "block-game-clone-backend/types/BoardCell"
-import { Shadows } from "../visual/Shadows"
 
 export const MenuDemo = () => {
     return (
         <Canvas frameloop="demand" style={{ cursor: "move" }}>
             <Lighting />
             <CustomCamera />
-            <Shadows />
-
             <MenuDemoGameBoard />
         </Canvas>
     )
