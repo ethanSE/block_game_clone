@@ -5,7 +5,6 @@ import { GameState } from "block-game-clone-backend/types/GameState";
 import { Action } from "block-game-clone-backend/types/Action";
 import { Piece } from "block-game-clone-backend/types/Piece";
 import { PieceName } from 'block-game-clone-backend/types/PieceName';
-import { colors } from '../types';
 import PlayerIndicator from './PlayerIndicator';
 
 export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
@@ -15,13 +14,12 @@ export default function PieceSelectorContainer(props: { state: GameState, update
 
     return (
         <div className={css.pieceSelectorContainer} >
-            <div style={{ height: "30px", display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <h4>Select a Piece</h4>
-
+            <div style={{ height: "30px", display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <h4>Current player: </h4>
                     <PlayerIndicator size={25} player={current_player} />
                 </div>
+                <h4>Select a Piece</h4>
             </div>
             <div className={css.pieceGroup}>
                 {
