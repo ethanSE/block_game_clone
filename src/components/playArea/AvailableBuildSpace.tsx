@@ -3,7 +3,7 @@ import { BoardState } from "block-game-clone-backend/types/BoardState";
 import { useContext } from "react";
 import { BoxGeometry } from "three";
 import { ShowAvailableSpaceContext } from "../Game";
-import interpolate from "color-interpolate";
+import { heightColor } from "../../utils";
 
 export default function AvailableBuildSpace(props: { boardState: BoardState }) {
     const { showAvailableSpace } = useContext(ShowAvailableSpaceContext);
@@ -15,15 +15,10 @@ export default function AvailableBuildSpace(props: { boardState: BoardState }) {
         <>
             {showAvailableSpace && empties.map(({ position }) => <>
                 <mesh position={position} key={position.toString()}>
-                    <Wireframe geometry={new BoxGeometry(1, 1, 1)} simplify={true} fill={color(position[1])} stroke={"#000000"} thickness={.15} />
+                    <Wireframe geometry={new BoxGeometry(1, 1, 1)} simplify={true} fill={heightColor(position[1])} stroke={"#000000"} thickness={.15} />
                 </mesh>
             </>)}
         </>
     )
 }
 
-const color = (n: number) => {
-    const scale = interpolate(['#ffc371', '#ff5f6d']);
-    let c = scale(n / 4);
-    return c
-}

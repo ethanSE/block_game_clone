@@ -4,10 +4,10 @@
   "private": true,
   "homepage": "https://ethanSE.github.io/block_game_clone",
   "dependencies": {
+    "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.78.1",
     "@react-three/fiber": "^8.13.4",
     "block-game-clone-backend": "0.1.26",
-    "color-interpolate": "^1.0.5",
     "fp-ts": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -5,25 +5,23 @@ import { Cube } from "block-game-clone-backend/types/Cube";
 import { Action } from "block-game-clone-backend/types/Action";
 import { BoardCell } from "block-game-clone-backend/types/BoardCell";
 
-const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => void }) => {
-
-    //TODO - clean up? - functional abstraction(?) - memoize(?)
-
-    let cubes = props.boardState.board.cells.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
-        let cube: { position: [number, number, number], cell: BoardCell } = {
-            position: [x, y, z],
+const cells3DArrayTo1DPosition = (cells: BoardCell[][][]): Cube[] => {
+    return cells.flatMap((a, x) => a.flatMap((b, y) => b.map((bc, z) => {
+        return {
+            position: [x, y, z] as [number, number, number],
             cell: bc
         }
-        return cube
-    }))).filter((bc) => bc.cell.type === "Player").map((c) => {
-        let a: Cube = {
+    }))).filter((bc) => bc.cell.type === "Player").map((c): Cube => {
+        return {
             position: c.position,
             error: null,
             player: c.cell.type === "Player" ? c.cell.data : "p1"
         }
-        return a;
-    });
+    })
+}
 
+const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => void }) => {
+    const cubes = cells3DArrayTo1DPosition(props.boardState.board.cells);
     return (
         <>
             {cubes.map(

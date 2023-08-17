@@ -30,7 +30,7 @@ export default function Game(props: { mode: GameMode }) {
                     <div ref={containerDivRef} className={css.canvasContainer} >
                         <div ref={gameAreaDivRef} className={css.canvasSection} />
                         <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
-                        <Canvas eventSource={containerDivRef} style={{ position: 'absolute' }} frameloop="demand">
+                        <Canvas eventSource={containerDivRef} style={{ position: 'absolute' }} frameloop="always">
                             <CustomCamera />
                             <PlayArea gameState={state} update={update} gameAreaDivRef={gameAreaDivRef} />
                             <PieceRotateArea playerState={state.player_state} update={update} pieceRotateDivRef={pieceRotateDivRef} />

@@ -2,7 +2,7 @@ import { BoardState } from "block-game-clone-backend/types/BoardState";
 import { Action } from "block-game-clone-backend/types/Action";
 import { Wireframe } from "@react-three/drei";
 import { useShadows } from "../visual/Shadows";
-import interpolate from "color-interpolate";
+import { heightColor } from "../../utils";
 
 export const BaseTiles = (props: { boardState: BoardState, update: (a: Action) => void }) => {
 
@@ -44,14 +44,8 @@ const BaseTileComponent = (props: { position: [number, number], height: number, 
             }}
         >
             <boxGeometry args={[1, .2, 1]} />
-            <meshPhongMaterial color={color(props.height)} />
+            <meshPhongMaterial color={heightColor(props.height)} />
             <Wireframe simplify={true} stroke={"#000000"} thickness={0.001} />
         </mesh>
     );
 };
-
-const color = (n: number) => {
-    const scale = interpolate(['#ffc371', '#ff5f6d']);
-    let c = scale(n / 4);
-    return c
-}
