@@ -33,9 +33,9 @@ const TopControls = (props: { gameState: GameState, update: (a: Action) => void 
 
     return (
         <div className={css.topControls}>
-            <button className={css.button1} onClick={() => props.update({ type: "PlayPreviewedPiece" })}>Play</button>
+            <button className={css.button1} onClick={() => setShowAvailableSpace(!showAvailableSpace)}>{`${showAvailableSpace ? 'Hide' : 'Show'} available space`}</button>
             <Score p1score={props.gameState.score.p1} p2score={props.gameState.score.p2} />
-            <button className={css.button2} onClick={() => setShowAvailableSpace(!showAvailableSpace)}>{`${showAvailableSpace ? 'Hide' : 'Show'} available space`}</button>
+            <button className={css.button2} onClick={() => props.update({ type: "PlayPreviewedPiece" })}>Play</button>
         </div>
     )
 }

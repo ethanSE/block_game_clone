@@ -25,7 +25,6 @@ export function useGameState(mode: GameMode) {
 
     useEffect(() => {
         if (wasm) {
-            console.log("mode in useGameState", mode)
             let str = wasm.new_game(JSON.stringify(mode));
             let gs = JSON.parse(str) as GameState;
             setState(gs)
