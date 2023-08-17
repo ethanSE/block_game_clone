@@ -10,13 +10,15 @@ import { BoxGeometry } from "three";
 export default function PreviewedPiece(props: { piece: Piece, owner: Player, update: (a: Action) => void }) {
 
     return (
-        <Center>
-            {props.piece.coords.map((coord) => <PreviewCube
-                key={JSON.stringify(coord)}
-                cube={{ player: props.owner, position: coord, error: null }}
-                selected={coord[0] === 0 && coord[1] === 0 && coord[2] === 0}
-                setSelectedPieceOrigin={() => props.update({ type: 'SetSelectedPieceOrigin', data: coord })}
-            />)}
+        <Center onCentered={() => { }}>
+            {
+                props.piece.coords.map((coord) => <PreviewCube
+                    key={JSON.stringify(coord)}
+                    cube={{ player: props.owner, position: coord, error: null }}
+                    selected={coord[0] === 0 && coord[1] === 0 && coord[2] === 0}
+                    setSelectedPieceOrigin={() => props.update({ type: 'SetSelectedPieceOrigin', data: coord })}
+                />)
+            }
         </Center >
     );
 }
