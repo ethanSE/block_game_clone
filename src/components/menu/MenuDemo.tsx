@@ -9,7 +9,7 @@ import { BoardCell } from "block-game-clone-backend/types/BoardCell"
 
 export const MenuDemo = () => {
     return (
-        <Canvas frameloop="demand" style={{ cursor: "move" }}>
+        <Canvas frameloop="always" style={{ cursor: "move" }}>
             <Lighting />
             <CustomCamera />
             <MenuDemoGameBoard />
