@@ -26,16 +26,18 @@ export default function Game(props: { mode: GameMode }) {
     return (
         <ShowAvailableSpaceContext.Provider value={{ showAvailableSpace, setShowAvailableSpace }}>
             {state &&
-                <div ref={containerDivRef} className={css.canvasContainer} >
-                    <div ref={gameAreaDivRef} className={css.canvasSection} style={{ backgroundColor: 'tan' }} />
-                    <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
-                    <Canvas eventSource={containerDivRef} frameloop="always" style={{ position: 'absolute' }}>
-                        <CustomCamera />
-                        <PlayArea gameState={state} update={update} gameAreaDivRef={gameAreaDivRef} />
-                        <PieceRotateArea playerState={state.player_state} update={update} pieceRotateDivRef={pieceRotateDivRef} />
-                    </Canvas>
+                <>
+                    <div ref={containerDivRef} className={css.canvasContainer} >
+                        <div ref={gameAreaDivRef} className={css.canvasSection} style={{ backgroundColor: 'tan' }} />
+                        <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
+                        <Canvas eventSource={containerDivRef} frameloop="always" style={{ position: 'absolute' }}>
+                            <CustomCamera />
+                            <PlayArea gameState={state} update={update} gameAreaDivRef={gameAreaDivRef} />
+                            <PieceRotateArea playerState={state.player_state} update={update} pieceRotateDivRef={pieceRotateDivRef} />
+                        </Canvas>
+                    </div>
                     <GameControls gameState={state} update={update} />
-                </div>
+                </>
             }
         </ShowAvailableSpaceContext.Provider>
     )
