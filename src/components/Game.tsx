@@ -11,7 +11,7 @@ import CustomCamera from './visual/CustomCamera';
 //styles
 import css from '../styles/Game.module.css'
 import { GameMode } from 'block-game-clone-backend/types/GameMode';
-import Controls from './Controls';
+import GameControls from './GameControls';
 
 export const ShowAvailableSpaceContext = createContext({ showAvailableSpace: false, setShowAvailableSpace: (_: boolean) => { } });
 
@@ -24,21 +24,19 @@ export default function Game(props: { mode: GameMode }) {
     const containerDivRef = useRef(null!)
 
     return (
-        <div className={css.website}>
+        <ShowAvailableSpaceContext.Provider value={{ showAvailableSpace, setShowAvailableSpace }}>
             {state &&
-                <ShowAvailableSpaceContext.Provider value={{ showAvailableSpace, setShowAvailableSpace }}>
-                    <div ref={containerDivRef} className={css.canvasContainer} >
-                        <div ref={gameAreaDivRef} className={css.canvasSection} />
-                        <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
-                        <Canvas eventSource={containerDivRef} style={{ position: 'absolute' }} frameloop="always">
-                            <CustomCamera />
-                            <PlayArea gameState={state} update={update} gameAreaDivRef={gameAreaDivRef} />
-                            <PieceRotateArea playerState={state.player_state} update={update} pieceRotateDivRef={pieceRotateDivRef} />
-                        </Canvas>
-                    </div>
-                    <Controls gameState={state} update={update} />
-                </ShowAvailableSpaceContext.Provider>
+                <div ref={containerDivRef} className={css.canvasContainer} >
+                    <div ref={gameAreaDivRef} className={css.canvasSection} style={{ backgroundColor: 'tan' }} />
+                    <div ref={pieceRotateDivRef} className={css.canvasSection} style={{ backgroundColor: 'teal' }} />
+                    <Canvas eventSource={containerDivRef} frameloop="always" style={{ position: 'absolute' }}>
+                        <CustomCamera />
+                        <PlayArea gameState={state} update={update} gameAreaDivRef={gameAreaDivRef} />
+                        <PieceRotateArea playerState={state.player_state} update={update} pieceRotateDivRef={pieceRotateDivRef} />
+                    </Canvas>
+                    <GameControls gameState={state} update={update} />
+                </div>
             }
-        </div >
+        </ShowAvailableSpaceContext.Provider>
     )
 }

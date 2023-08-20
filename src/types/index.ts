@@ -4,3 +4,5 @@ export const colors = {
     p1: "#03adfc",
     p2: "#008000"
 }
+
+export const TopBarHeight = 40;
