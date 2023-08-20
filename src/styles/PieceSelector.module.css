@@ -1,23 +1,31 @@
 .pieceSelectorContainer {
-    position: relative;
     background-color: grey;
-    pointer-events: all;
-    height: calc(50vh - 28px);
+    width: auto;
+    overflow: hidden;
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    padding: 5px;
+    pointer-events: auto;
+    position: fixed;
+    bottom: 0;
+    box-sizing: border-box;
 }
 
 .pieceGroup {
+    pointer-events: none;
     background-color: tan;
-    border-radius: 3px;
-    flex: 1;
+    height: 100%;
+    width: auto;
+    overflow: hidden;
     display: grid;
-    justify-items: center;
+    align-items: stretch;
+    justify-items: stretch;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 5px;
     padding: 5px;
+    gap: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .p1 {
@@ -31,11 +39,14 @@
 }
 
 .piece {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid gold;
-    border-radius: 3px;
+    object-fit: contain;
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    pointer-events: auto;
+    box-sizing: border-box;
 }
 
 .available {
