@@ -66,6 +66,7 @@ function PieceSelectorItem(props: PieceSelectorItemProps) {
             className={css[props.status]}
             src={`/block_game_clone/pieceImages/${props.pieceName}.png`}
             alt={props.pieceName}
+            draggable="false"
         />
     )
 }
