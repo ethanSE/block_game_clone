@@ -19,11 +19,12 @@ export function useWasm() {
     return wasm
 }
 
-export function useGameState(mode: GameMode) {
+export function useDemoGameState(mode: GameMode) {
     const wasm = useWasm();
     const [state, setState] = useState<GameState>();
 
     useEffect(() => {
+        console.log('firing')
         if (wasm) {
             let str = wasm.new_game(JSON.stringify(mode));
             let gs = JSON.parse(str) as GameState;
@@ -33,21 +34,30 @@ export function useGameState(mode: GameMode) {
 
 
     useEffect(() => {
-        if (wasm && state?.game_mode.type === "VSGreedyAI" && state.player_state.current_player === "p2") {
+        if (wasm && (state?.game_ended === false)) {
+            console.log(state?.game_ended)
             let greedy_move_action: Action = { type: 'MakeGreedyAIMove' }
             let str = wasm.next_game_state(JSON.stringify(state), JSON.stringify(greedy_move_action));
+
             let gs = JSON.parse(str) as GameState;
-            setState(gs);
+
+            if (!gs.game_ended) {
+                setTimeout(() => {
+                    setState(gs);
+
+                }, 500);
+            }
         }
     }, [state, wasm])
 
-    const update = (action: Action) => {
-        if (wasm) {
-            let str = wasm.next_game_state(JSON.stringify(state), JSON.stringify(action));
-            let gs = JSON.parse(str) as GameState;
-            setState(gs)
-        }
-    }
+    // const update = () => {
+    //     if (wasm) {
+    //         let greedy_move_action: Action = { type: 'MakeGreedyAIMove' }
+    //         let str = wasm.next_game_state(JSON.stringify(state), JSON.stringify(greedy_move_action));
+    //         let gs = JSON.parse(str) as GameState;
+    //         setState(gs)
+    //     }
+    // }
 
-    return { state, update }
+    return { state }
 }

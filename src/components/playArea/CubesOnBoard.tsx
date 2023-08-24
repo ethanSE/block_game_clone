@@ -20,13 +20,13 @@ const cells3DArrayTo1DPosition = (cells: BoardCell[][][]): Cube[] => {
     })
 }
 
-const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => void }) => {
+const CubesOnBoard = (props: { boardState: BoardState, update: (a: Action) => void, vsAI: boolean }) => {
     const cubes = cells3DArrayTo1DPosition(props.boardState.board.cells);
     return (
         <>
             {cubes.map(
                 (cube) =>
-                    <CubeC cube={cube} update={props.update} key={cube.position.toString()} />
+                    <CubeC cube={cube} update={props.update} key={cube.position.toString()} vsAI={props.vsAI} />
             )}
         </>
     );

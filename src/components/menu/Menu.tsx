@@ -19,7 +19,7 @@ export const Menu = (props: { setMode: (m: Mode) => void }) => {
 };
 
 function MapModeSelector(props: { setMode: (m: Mode) => void, gameMode: "VSGreedyAI" | "TwoPlayer" }) {
-    let maps: TwoPlayerMap[] = [{ type: "Tower" }, { type: "Pyramid" }, { type: "Wall" }, { type: "Stairs" }];
+    let maps: TwoPlayerMap[] = ["Tower", "Pyramid", "Wall", "Stairs"];
     return (
         <div className={css.mapSelector}>
             <h3>{props.gameMode}</h3>
@@ -28,7 +28,7 @@ function MapModeSelector(props: { setMode: (m: Mode) => void, gameMode: "VSGreed
                     className={css.button}
                     onClick={() => props.setMode({ type: props.gameMode, data: map })}
                 >
-                    {map.type}
+                    {map}
                 </button>
             )}
         </div>
