@@ -4,8 +4,9 @@ import { Cube } from "block-game-clone-backend/types/Cube";
 import { Action } from "block-game-clone-backend/types/Action";
 import { useSpring, animated } from '@react-spring/three'
 
-const CubeC = (props: { cube: Cube, update: (a: Action) => void }) => {
-    const { yOffset } = useSpring({ yOffset: 0, from: { yOffset: 3 }, config: { mass: 1.5 } });
+const CubeC = (props: { cube: Cube, update: (a: Action) => void, vsAI: boolean }) => {
+    const delay = props.cube.player === "p2" && props.vsAI ? 500 : 0;
+    const { yOffset } = useSpring({ yOffset: 0, from: { yOffset: 20 }, config: { mass: 1.5, friction: 30 }, delay });
 
     return (
         <animated.mesh

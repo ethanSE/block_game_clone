@@ -1,4 +1,3 @@
-import { Center } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import CustomCamera from "../visual/CustomCamera"
 import { Lighting } from "../visual/Lighting"
@@ -7,18 +6,22 @@ import { BaseTiles } from "../playArea/BaseTiles"
 import CubesOnBoard from "../playArea/CubesOnBoard"
 import { BoardCell } from "block-game-clone-backend/types/BoardCell"
 import { Vector3 } from "three"
+import { useDemoGameState } from "../../hooks/useDemoGameState"
+import GameBoard from "../playArea/GameBoard"
+import { Action } from "block-game-clone-backend/types/Action"
+import { GameMode } from "block-game-clone-backend/types/GameMode"
 
 export const MenuDemo = () => {
     return (
         <Canvas frameloop="always" style={{ cursor: "move" }}>
             <Lighting />
             <CustomCamera />
-            <MenuDemoGameBoard />
+            <DemoAutoPlayAI />
         </Canvas>
     )
 }
 
-const MenuDemoGameBoard = () => {
+const _MenuDemoGameBoard = () => {
     const row1: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Empty' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
     const row2: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Player', data: 'p1' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Empty' }, { type: 'Empty' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
     const row3: BoardCell[][] = [[{ type: 'Player', data: 'p1' }, { type: 'Player', data: 'p2' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Empty' }, { type: 'Player', data: 'p2' }], [{ type: 'Empty' }, { type: 'Player', data: 'p1' }, { type: 'Empty' }]]
@@ -26,8 +29,23 @@ const MenuDemoGameBoard = () => {
 
     return (
         <group position={new Vector3(...demoBoardState.board.center).negate()}>
-            <CubesOnBoard boardState={demoBoardState} update={(a) => { }} />
+            <CubesOnBoard boardState={demoBoardState} update={(a) => { }} vsAI={false} />
             <BaseTiles boardState={demoBoardState} update={(a) => { }} />
         </group>
+    )
+}
+
+const mode: GameMode = { type: "TwoPlayer", data: "Tower" };
+
+const DemoAutoPlayAI = () => {
+
+    const { state } = useDemoGameState(mode);
+
+    return (
+        <>
+            {state &&
+                <GameBoard gameState={state} update={(a: Action) => { }} />
+            }
+        </>
     )
 }
