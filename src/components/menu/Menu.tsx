@@ -8,7 +8,7 @@ export const Menu = (props: { setMode: (m: Mode) => void }) => {
         <div className={css.menu}>
             <MenuDemo />
             <div className={css.menuOptionsContainer}>
-                <h3>Select game mode:</h3>
+                <h2>Select game mode:</h2>
                 <div style={{ flex: '1', display: 'flex', width: '100%' }}>
                     <MapModeSelector setMode={props.setMode} gameMode={"VSGreedyAI"} />
                     <MapModeSelector setMode={props.setMode} gameMode={"TwoPlayer"} />

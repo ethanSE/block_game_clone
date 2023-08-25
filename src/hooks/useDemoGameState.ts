@@ -24,7 +24,6 @@ export function useDemoGameState(mode: GameMode) {
     const [state, setState] = useState<GameState>();
 
     useEffect(() => {
-        console.log('firing')
         if (wasm) {
             let str = wasm.new_game(JSON.stringify(mode));
             let gs = JSON.parse(str) as GameState;
@@ -45,19 +44,10 @@ export function useDemoGameState(mode: GameMode) {
                 setTimeout(() => {
                     setState(gs);
 
-                }, 500);
+                }, 750);
             }
         }
     }, [state, wasm])
-
-    // const update = () => {
-    //     if (wasm) {
-    //         let greedy_move_action: Action = { type: 'MakeGreedyAIMove' }
-    //         let str = wasm.next_game_state(JSON.stringify(state), JSON.stringify(greedy_move_action));
-    //         let gs = JSON.parse(str) as GameState;
-    //         setState(gs)
-    //     }
-    // }
 
     return { state }
 }
