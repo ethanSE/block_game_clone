@@ -64,7 +64,7 @@ function PieceSelectorItem(props: PieceSelectorItemProps) {
         <img
             onClick={() => props.status === 'available' && props.setSelected()}
             className={css[props.status]}
-            src={`/block_game_clone/pieceImages/${props.pieceName}.png`}
+            src={`/pieceImages/${props.pieceName}.png`}
             alt={props.pieceName}
             draggable="false"
         />
