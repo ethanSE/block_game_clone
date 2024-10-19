@@ -2,7 +2,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: tan;
+    background-color: grey;
 }
 
 .menuDemoContainer {
@@ -11,7 +11,7 @@
 }
 
 .menuOptionsContainer {
-    background-color: teal;
+    /* background-color: teal; */
     height: fit-content;
     width: 100%;
     display: flex;

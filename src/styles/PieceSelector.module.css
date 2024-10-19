@@ -13,7 +13,7 @@
 
 .pieceGroup {
     pointer-events: none;
-    background-color: tan;
+    /* background-color: tan; */
     height: 100%;
     width: auto;
     overflow: hidden;

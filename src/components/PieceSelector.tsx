@@ -8,7 +8,9 @@ import { PieceName } from 'block-game-clone-backend/types/PieceName';
 import PlayerIndicator from './PlayerIndicator';
 import { Player } from 'block-game-clone-backend/types/Player';
 import { use100vh } from 'react-div-100vh';
-import { TopBarHeight } from '../types';
+
+import Card from '@mui/material/Card';
+import Button from '@mui/material/Button';
 
 export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
     const current_player = props.state.player_state.current_player;
@@ -20,10 +22,16 @@ export default function PieceSelectorContainer(props: { state: GameState, update
     return (
         <>
             {totalScreenHeight &&
-                <div className={css.pieceSelectorContainer} style={{ height: (totalScreenHeight - TopBarHeight) / 2, width: '100%' }}>
+                <Card
+                    className={css.pieceSelectorContainer}
+                    style={{
+                        height: (totalScreenHeight) / 2,
+                        width: '100%'
+                    }}
+                >
                     <PieceSelectorHeader current_player={current_player} />
                     <PieceSelectorGroup pieces={pieces} current_player={current_player} update={props.update} />
-                </div>
+                </Card>
             }
         </>
     );
@@ -32,11 +40,11 @@ export default function PieceSelectorContainer(props: { state: GameState, update
 function PieceSelectorHeader(props: { current_player: Player }) {
     return (
         <div style={{ height: "30px", display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
+            <h4>Select a Piece</h4>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <h4>Current player: </h4>
                 <PlayerIndicator size={25} player={props.current_player} />
             </div>
-            <h4>Select a Piece</h4>
         </div>
     )
 }
@@ -61,13 +69,19 @@ function PieceSelectorGroup(props: { pieces: [PieceName, Piece | null][], curren
 
 function PieceSelectorItem(props: PieceSelectorItemProps) {
     return (
-        <img
-            onClick={() => props.status === 'available' && props.setSelected()}
+        <Button
             className={css[props.status]}
-            src={`/pieceImages/${props.pieceName}.png`}
-            alt={props.pieceName}
-            draggable="false"
-        />
+            sx={{ color: '' }}
+            disabled={props.status === 'unavailable'}
+            onClick={() => props.status === 'available' && props.setSelected()}
+            variant='contained'
+        >
+            <img
+                src={`/pieceImages/${props.pieceName}.png`}
+                alt={props.pieceName}
+                draggable="false"
+            />
+        </Button>
     )
 }
 

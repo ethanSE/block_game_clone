@@ -2,18 +2,27 @@ import { MenuDemo } from "./MenuDemo"
 import css from '../../styles/Menu.module.css'
 import { Mode } from "../App"
 import { TwoPlayerMap } from "block-game-clone-backend/types/TwoPlayerMap"
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 
 export const Menu = (props: { setMode: (m: Mode) => void }) => {
     return (
         <div className={css.menu}>
             <MenuDemo />
-            <div className={css.menuOptionsContainer}>
-                <h2>Select game mode:</h2>
-                <div style={{ flex: '1', display: 'flex', width: '100%' }}>
-                    <MapModeSelector setMode={props.setMode} gameMode={"VSGreedyAI"} />
-                    <MapModeSelector setMode={props.setMode} gameMode={"TwoPlayer"} />
-                </div>
-            </div>
+            <Box
+                style={{ flexDirection: 'row' }}
+            >
+                <Card style={{ width: '100%', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant='overline'>
+                        Select game mode:</Typography>
+                    <div style={{ flex: '1', display: 'flex', width: '100%' }}>
+                        <MapModeSelector setMode={props.setMode} gameMode={"VSGreedyAI"} />
+                        <MapModeSelector setMode={props.setMode} gameMode={"TwoPlayer"} />
+                    </div>
+                </Card>
+            </Box>
         </div>
     )
 };
@@ -22,14 +31,18 @@ function MapModeSelector(props: { setMode: (m: Mode) => void, gameMode: "VSGreed
     let maps: TwoPlayerMap[] = ["Tower", "Pyramid", "Wall", "Stairs"];
     return (
         <div className={css.mapSelector}>
-            <h3>{props.gameMode}</h3>
+            <Typography variant='subtitle1'>{props.gameMode}</Typography>
             {maps.map((map) =>
-                <button
-                    className={css.button}
-                    onClick={() => props.setMode({ type: props.gameMode, data: map })}
-                >
-                    {map}
-                </button>
+                <>
+                    <Button
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                        className={css.button}
+                        onClick={() => props.setMode({ type: props.gameMode, data: map })}
+                    >
+                        {map}
+                    </Button>
+                </>
             )}
         </div>
     )

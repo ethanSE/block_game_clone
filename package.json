@@ -4,6 +4,10 @@
   "private": true,
   "homepage": "https://ethanSE.github.io/block_game_clone",
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.4",
+    "@mui/material": "^6.1.4",
     "@react-spring/three": "^9.7.5",
     "@react-three/drei": "^9.114.5",
     "@react-three/fiber": "^8.17.10",
