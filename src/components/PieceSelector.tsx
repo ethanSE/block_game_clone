@@ -12,6 +12,33 @@ import { use100vh } from 'react-div-100vh';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 
+import corner from '../../public/pieceImages/corner.png';
+import l from '../../public/pieceImages/l.png';
+import left_screw from '../../public/pieceImages/left_screw.png';
+import one_by_four from '../../public/pieceImages/one_by_four.png';
+import one_by_three from '../../public/pieceImages/one_by_three.png';
+import one_by_two from '../../public/pieceImages/one_by_two.png';
+import right_screw from '../../public/pieceImages/right_screw.png';
+import short_l from '../../public/pieceImages/short_l.png';
+import two_by_two from '../../public/pieceImages/two_by_two.png';
+import z from '../../public/pieceImages/z.png';
+import t from '../../public/pieceImages/t.png';
+
+const piece_image_source_map: Record<PieceName, string> =
+{
+    one_by_two: one_by_two,
+    one_by_three: one_by_three,
+    one_by_four: one_by_four,
+    two_by_two: two_by_two,
+    z: z,
+    t: t,
+    l: l,
+    short_l: short_l,
+    right_screw: right_screw,
+    left_screw: left_screw,
+    corner: corner
+}
+
 export default function PieceSelectorContainer(props: { state: GameState, update: (a: Action) => void }) {
     const current_player = props.state.player_state.current_player;
     const current_player_hand = props.state.player_state.players[current_player];
@@ -77,7 +104,7 @@ function PieceSelectorItem(props: PieceSelectorItemProps) {
             variant='contained'
         >
             <img
-                src={`/pieceImages/${props.pieceName}.png`}
+                src={piece_image_source_map[props.pieceName]}
                 alt={props.pieceName}
                 draggable="false"
             />
