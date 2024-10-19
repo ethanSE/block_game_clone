@@ -8,6 +8,12 @@ import css from '../styles/App.module.css';
 import { GameMode } from 'block-game-clone-backend/types/GameMode';
 import Div100vh from 'react-div-100vh';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: { mode: 'dark' }
+});
+
 export type Mode = 'menu' | GameMode;
 
 function App() {
@@ -19,10 +25,12 @@ function App() {
 
     return (
         <Div100vh>
-            <div className={css.app}>
-                <TopBar back={() => setMode('menu')} />
-                {mode === 'menu' ? <Menu setMode={setMode} /> : <Game mode={mode} />}
-            </div>
+            <ThemeProvider theme={theme}>
+                <div className={css.app}>
+                    <TopBar back={() => setMode('menu')} showBack={mode !== 'menu'} />
+                    {mode === 'menu' ? <Menu setMode={setMode} /> : <Game mode={mode} />}
+                </div>
+            </ThemeProvider>
         </Div100vh>
     )
 }
